@@ -1,25 +1,20 @@
 <template>
   <div class="modify-h">
-    <van-nav-bar
-      title="个人信息"
-      left-text=""
-      left-arrow
-      @click-left="onClickLeftHJ"
-      style="margin-bottom: 0.1rem"
-    />
+    <Return>个人中心</Return>
     <ul class="top-h">
       <li>
         <span>头像</span>
         <p>
-          <img :src="img" alt="" />
-          <!-- <van-uploader class="img-set-h" :after-read="afterRead" /> -->
+          <van-uploader :after-read="afterRead">
+            <img :src="$store.state.modifyHJ.img"
+          /></van-uploader>
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
-      <li>
+      <li @click="nameHJ">
         <span>姓名</span>
         <p>
-          <span class="top-txt-h gray-h">李木木</span>
+          <span class="top-txt-h gray-h">睡觉觉</span>
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
@@ -69,21 +64,21 @@
   </div>
 </template>
 <script>
+import Return from "../../component/return";
 export default {
+  components: {
+    Return,
+  },
   data() {
     return {
-      img: "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/avatar.jpg",
-      
     };
   },
   methods: {
-    onClickLeftHJ() {
-      this.$router.go(-1);
-    },
     afterRead(file) {
-      // 此时可以自行将文件上传至服务器
-      console.log(file);
-      this.img = file.content;
+      this.$store.commit('afterRead',file.content)
+    },
+    nameHJ() {
+      this.$router.push({path:'/set-name'})
     },
   },
 };
@@ -113,6 +108,9 @@ export default {
         }
         .gray-h {
           color: #ccc;
+        }
+        .van-uploader {
+          height: 0.8rem !important;
         }
         img {
           width: 0.8rem;
