@@ -1,10 +1,10 @@
-// 无底部导航的路由集合 
-const routes = [
+
+const routers = [
     {
-        // path:'/MoblLogin',
-        // name:'MoblLogin',
-        // component:() => import('./MoblLogin')
+        path:'/modify-h',
+        name:'modify-h',
+        component:() => import('./modify-h')
     }
 ]
 
-export default routes
+export default routers
