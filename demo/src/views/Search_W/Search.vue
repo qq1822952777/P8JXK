@@ -1,14 +1,18 @@
 <template>
-    <div>
-        <h1>搜索</h1>
-    </div>
+  <div>
+    <top></top>
+    <h1>搜索</h1>
+  </div>
 </template>
 <script>
+import top from "../../../components/top.vue";
 export default {
-    data() {
-        return {};
-    },
+  components: {
+    top,
+  },
+  data() {
+    return {};
+  },
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
