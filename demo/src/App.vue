@@ -5,4 +5,7 @@
   </div>
 </template>
 <style lang="scss">
+html,body,#app,#main{
+  height: 100%;
+}
 </style>
