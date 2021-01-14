@@ -4,7 +4,7 @@ Vue.use(VueRouter)
 // 路由引入项
 import Main from '@/views/main/Main'
 import maiRouter from '@/views/main/mainRouter'
-
+import profilRouters from '../views/Profile_H'
 
 
 const routes = [
@@ -28,7 +28,7 @@ const routes = [
     component: () => import('../views/Login_J/Login')
   },
   // 将路由向下扩展 ... 
-  
+  ...profilRouters
 ]
 
 const router = new VueRouter({

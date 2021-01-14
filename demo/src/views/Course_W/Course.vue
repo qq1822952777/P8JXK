@@ -1,9 +1,9 @@
 <template>
   <div class="Coursr">
     <div class="top-w">
-      <van-nav-bar title="课程列表" right-text="按钮">
+      <van-nav-bar title="特色课" right-text="按钮">
         <template #right>
-          <van-icon name="search" color="#123" size="27" />
+          <van-icon @click="sear" name="search" color="#123" size="27" />
         </template>
       </van-nav-bar>
     </div>
@@ -24,30 +24,48 @@
         <van-icon name="arrow-down" v-if="ico3 == true" />
       </div>
     </div>
-    <div class="list-w" @click="list">
+    <div class="list-w" :style="{ overflow: scr }" @click="list">
       <div class="list-top-w">
-        <van-popup v-model="show1" position="top" :style="{ height: '30%' }">
+        <van-popup v-model="show1" position="top" :style="{ height: '60%' }">
           <div class="classify-w">
             <ul>
-              <li v-for="(item, index) in 10" :key="index" @click="sone(index)">
+              <li
+                v-for="(item, index) in 10"
+                :key="index"
+                @click="sone(index)"
+                :style="{ color: sst == index ? 'red' : '' }"
+              >
                 高一
               </li>
             </ul>
             <ul>
-              <li v-for="(item, index) in 10" :key="index">物理</li>
+              <li
+                v-for="(item, index) in 10"
+                :key="index"
+                @click="sone2(index)"
+                :style="{ color: sst2 == index ? 'red' : '' }"
+              >
+                物理
+              </li>
             </ul>
           </div>
         </van-popup>
-        <van-popup v-model="show2" position="top" :style="{ height: '30%' }">
+        <van-popup v-model="show2" position="top" :style="{ height: '60%' }">
           <ul class="sort-w">
-            <li>综合排序</li>
-            <li v-for="(item, index) in 8" :key="index">最新</li>
+            <li
+              v-for="(item, index) in 8"
+              :key="index"
+              @click="sone3(index)"
+              :style="{ color: sst3 == index ? 'red' : '' }"
+            >
+              综合排名
+            </li>
           </ul>
         </van-popup>
         <van-popup
           v-model="show3"
           position="top"
-          :style="{ height: '30%' }"
+          :style="{ height: '65%' }"
           class="list-vant"
         >
           <div class="screen">
@@ -55,19 +73,49 @@
               <div>
                 <p>类别</p>
                 <ul>
-                  <li v-for="(item, index) in 5" :key="index">全部</li>
+                  <li
+                    v-for="(item, index) in 5"
+                    :key="index"
+                    @click="sone4(index)"
+                    :style="[
+                      { color: sst4 == index ? '#fff' : '' },
+                      { background: sst4 == index ? 'red' : '' },
+                    ]"
+                  >
+                    全部
+                  </li>
                 </ul>
               </div>
               <div>
                 <p>讲师</p>
                 <ul>
-                  <li v-for="(item, index) in 7" :key="index">全部</li>
+                  <li
+                    v-for="(item, index) in 7"
+                    :key="index"
+                    @click="sone5(index)"
+                    :style="[
+                      { color: sst5 == index ? '#fff' : '' },
+                      { background: sst5 == index ? 'red' : '' },
+                    ]"
+                  >
+                    全部
+                  </li>
                 </ul>
               </div>
               <div>
                 <p>价格</p>
                 <ul>
-                  <li v-for="(item, index) in 4" :key="index">全部</li>
+                  <li
+                    v-for="(item, index) in 4"
+                    :key="index"
+                    @click="sone6(index)"
+                    :style="[
+                      { color: sst6 == index ? '#fff' : '' },
+                      { background: sst6 == index ? 'red' : '' },
+                    ]"
+                  >
+                    全部
+                  </li>
                 </ul>
               </div>
             </div>
@@ -77,14 +125,15 @@
             <div>确认</div>
           </div>
         </van-popup>
-        <van-card
-          v-for="(item, index) in 10"
-          :key="index"
-          price="1998.0"
-          desc="800人已报名"
-          title="给你好声音的密码"
-          thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
-        />
+        <div class="list-bom" v-for="(item, index) in 6" :key="index">
+          <p>李老师16号到22号地理他课堂开课了</p>
+          <p>时间</p>
+          <img src="/download.jpg" alt="" />李青
+          <div>
+            <span>115人报名</span>
+            <span style="color:#44A426;">免费</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -99,16 +148,41 @@ export default {
       show1: false,
       show2: false,
       show3: false,
-      sst: "",
+      sst: 0,
+      sst2: 0,
+      sst3: 0,
+      sst4: 0,
+      sst5: 0,
+      sst6: 0,
+      scr: "scroll",
     };
   },
   methods: {
-    list() {
-      this.ico2 = true;
-      this.ico3 = true;
-      this.ico1 = true;
+    sear() {
+      this.$router.push({ path: "/Search" });
     },
-    sone() {
+    sone6(index) {
+      this.sst6 = index;
+    },
+    sone5(index) {
+      this.sst5 = index;
+    },
+    sone4(index) {
+      this.sst4 = index;
+    },
+    sone3(index) {
+      this.sst3 = index;
+    },
+    sone2(index) {
+      this.sst2 = index;
+    },
+    list() {
+      // this.ico2 = true;
+      // this.ico3 = true;
+      // this.ico1 = true;
+    },
+    sone(index) {
+      console.log(index);
       this.sst = index;
     },
     icoch() {
@@ -130,6 +204,7 @@ export default {
   watch: {
     ico1(val) {
       if (val == false) {
+        this.scr = "none";
         this.show1 = true;
       } else {
         this.show1 = false;
@@ -137,6 +212,8 @@ export default {
     },
     ico2(val) {
       if (val == false) {
+        this.scr = "none";
+
         this.show2 = true;
       } else {
         this.show2 = false;
@@ -144,6 +221,8 @@ export default {
     },
     ico3(val) {
       if (val == false) {
+        this.scr = "none";
+
         this.show3 = true;
       } else {
         this.show3 = false;
@@ -171,9 +250,35 @@ export default {
     width: 100%;
     height: 10.3rem;
     // background: chartreuse;
-    overflow: scroll;
+    // overflow-x: hidden;
+    // overflow-y: scroll;
     .list-top-w {
+      height: 100%;
       position: relative;
+      border: 1px solid #fff;
+      background: rgb(218, 217, 217);
+      .list-bom {
+        font-size: 0.4rem;
+        width: 7rem;
+        height: 3rem;
+        background: #ffffff;
+        margin: auto;
+        padding-left: 0.2rem;
+        padding-top: 0.2rem;
+        border-radius: 0.2rem;
+        margin-top: 0.5rem;
+        div {
+          width: 100%;
+          height: 1rem;
+          line-height: 1rem;
+          display: flex;
+          justify-content: space-between;
+        }
+        img {
+          height: 0.8rem;
+          width: 0.8rem;
+        }
+      }
       width: 100%;
       .classify-w {
         width: 100%;
