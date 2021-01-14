@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+// 路由引入项
 import Main from '@/views/main/Main'
 import maiRouter from '@/views/main/mainRouter'
-Vue.use(VueRouter)
-import profilRouters from '../views/Profile_H'
+
 
 
 const routes = [
   {
     path:'/',
-    name:'Main',
+    name:'Main', 
     component:Main,
     redirect:'/Home',
     children:[
@@ -19,21 +20,15 @@ const routes = [
   {
     path: '/Search',
     name: 'Search',
-    component: () => import('../views/Search_W/Search')
+    component: ()=> import('../views/Search_W/Search')   
   },
   {
     path: '/Login',
     name: 'Login',
-    component: () => import('../views/Login_J/Login'),
-    children:[
-      {
-        path: 'mm',
-        name: 'mm',
-        component: () => import('../views/Login_J/MoblLogin')
-      }
-    ]
+    component: () => import('../views/Login_J/Login')
   },
-  ...profilRouters
+  // 将路由向下扩展 ... 
+  
 ]
 
 const router = new VueRouter({
