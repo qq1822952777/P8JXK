@@ -128,7 +128,7 @@
         <div class="list-bom" v-for="(item, index) in 6" :key="index">
           <p>李老师16号到22号地理他课堂开课了</p>
           <p>时间</p>
-          <img src="/download.jpg" alt="" />李青
+          <img src="/images_J/download.jpg" alt="" />李青
           <div>
             <span>115人报名</span>
             <span style="color:#44A426;">免费</span>
@@ -252,11 +252,11 @@ export default {
     // background: chartreuse;
     // overflow-x: hidden;
     // overflow-y: scroll;
+    background: rgb(224, 224, 224);
     .list-top-w {
       height: 100%;
       position: relative;
       border: 1px solid #fff;
-      background: rgb(218, 217, 217);
       .list-bom {
         font-size: 0.4rem;
         width: 7rem;
@@ -275,8 +275,10 @@ export default {
           justify-content: space-between;
         }
         img {
-          height: 0.8rem;
-          width: 0.8rem;
+          padding-top: 0.1rem;
+          height: 0.7rem;
+          width: 0.7rem;
+          margin-top: 0.1rem;
         }
       }
       width: 100%;
