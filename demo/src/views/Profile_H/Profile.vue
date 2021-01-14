@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>蒋 报道 </h1>
+        <h1>个人</h1>
     </div>
 </template>
 <script>

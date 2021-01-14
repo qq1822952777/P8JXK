@@ -1,14 +1,17 @@
 <template>
-    <div>
-        <h1>profile页面</h1>
+    <div class="about">
+        <h1>手机号登录</h1>
     </div>
 </template>
 <script>
 export default {
     data() {
-        return {};
+        return {
+        
+        }
     },
-};
+}
 </script>
 <style lang="scss">
+    
 </style>

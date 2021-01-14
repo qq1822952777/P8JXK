@@ -1,27 +1,35 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import maiRouter from '@/views/main/mainRouter'
 import Main from '@/views/main/Main'
+import maiRouter from '@/views/main/mainRouter'
+// import LoginRouters from '../views/Login_J'
 Vue.use(VueRouter)
 const routes = [
   {
     path:'/',
     name:'Main',
     component:Main,
-    redirect:'/home',
+    redirect:'/Home',
     children:[
       ...maiRouter
     ]
   },
   {
-    path: '/detail',
-    name: 'detail',
-    component: () => import('../views/Detail'),
+    path: '/Search',
+    name: 'Search',
+    component: () => import('../views/Search_W/Search')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login.vue')
+    path: '/Login',
+    name: 'Login',
+    component: () => import('../views/Login_J/Login'),
+    children:[
+      {
+        path: 'mm',
+        name: 'mm',
+        component: () => import('../views/Login_J/MoblLogin')
+      }
+    ]
   }
 ]
 

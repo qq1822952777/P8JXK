@@ -9,9 +9,9 @@ import './assets/js/rem'
 
 
 // 移动端布局 vant
-// import Vant from 'vant';
-// import 'vant/lib/index.css';
-// Vue.use(Vant);
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant);
 
 // // vant 图片懒加载 img的src替换为 v-lazy="路径"
 // import { Lazyload } from "vant";

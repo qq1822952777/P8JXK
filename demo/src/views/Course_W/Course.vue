@@ -1,17 +1,14 @@
 <template>
-    <div class="about">
-        <h1>Detail页面</h1>
+    <div>
+        <h1>课程</h1>
     </div>
 </template>
 <script>
 export default {
     data() {
-        return {
-        
-        }
+        return {};
     },
-}
+};
 </script>
 <style lang="scss">
-    
 </style>

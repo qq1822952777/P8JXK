@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>王 报道</h2>
+    <h2>首页</h2>
   </div>
 </template>
 

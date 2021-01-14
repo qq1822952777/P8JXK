@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>shopcar页面</h1>
+    <h1>约课记录</h1>
   </div>
 </template>
 <script>
