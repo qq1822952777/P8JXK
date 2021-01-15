@@ -40,6 +40,7 @@ const routes = [
   ...Course
 ]
 
+console.log(routes);
 
 const router = new VueRouter({
   routes,
