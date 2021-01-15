@@ -11,33 +11,13 @@ const routers = [
     component: () => import("../Course_W/Course"),
   },
   {
-    path: "AuoutCourse",
-    name: "AuoutCourse",
-    meta: {
-      isLogin: true,
+    path:'Profile',
+    name:'Profile',
+    meta:{
+        isLogin:true
     },
-    component: () => import("../AuoutCourse_H/AuoutCourse"),
-  },
-  {
-    path: "Profile",
-    name: "Profile",
-    meta: {
-      isLogin: true,
-    },
-<<<<<<< HEAD
-    {
-        path:'Profile',
-        name:'Profile',
-        meta:{
-            isLogin:true
-        },
-        component:() => import('../Profile_H/Profile')
-    }
+    component:() => import('../Profile_H/Profile')
+  }
 ]
-=======
-    component: () => import("../Profile_H/Profile"),
-  },
-];
->>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
 
 export default routers;

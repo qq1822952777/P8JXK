@@ -2,18 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 // 路由引入项
-<<<<<<< HEAD
-import Main from '@/views/main/Main'
-import maiRouter from '@/views/main/mainRouter'
-import profilRouters from '../views/Profile_H'
-import Home_J from '../views/Home_J'
-
-=======
-import Main from "@/views/main/Main";
-import maiRouter from "@/views/main/mainRouter";
-import profilRouters from "../views/Profile_H";
-import Course from "../views/Course_W";
->>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
+import Main from '../views/main/Main.vue';            // 设置首页
+import maiRouter from "@/views/main/mainRouter";      // 底部导航的主页面
+import profilRouters from "../views/Profile_H";       // 黄俊的个人页面引入的路由组件
+import Course from "../views/Course_W";               // 王盛鑫的课程页面引入的路由组件
+import Home_J from '../views/Home_J';                 // 蒋希康的首页引入的路由组件
 
 const routes = [
   {
@@ -24,7 +17,6 @@ const routes = [
     children: [...maiRouter],
   },
   {
-<<<<<<< HEAD
       path:'/AuoutCourse',
       name:'AuoutCourse',
       meta:{
@@ -36,29 +28,17 @@ const routes = [
     path: '/Search',
     name: 'Search',
     component: ()=> import('../views/Search_W/Search')   
-=======
-    path: "/Search",
-    name: "Search",
-    component: () => import("../views/Search_W/Search"),
->>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
   },
   {
     path: "/Login",
     name: "Login",
     component: () => import("../views/Login_J/Login"),
   },
-<<<<<<< HEAD
   // 将路由向下扩展 ... 
   ...profilRouters,
-  ...Home_J
+  ...Home_J,
+  ...Course
 ]
-=======
-  // 将路由向下扩展 ...
-  ...profilRouters,
-  ...Course,
-];
->>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
-
 
 
 const router = new VueRouter({

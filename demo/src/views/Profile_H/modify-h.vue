@@ -64,7 +64,7 @@
     </ul>
     <!-- 时间弹出框 -->
     <van-popup
-      v-model:show="showdate"
+      show="showdate"
       position="bottom"
       :style="{ height: '30%' }"
     >
@@ -82,7 +82,7 @@
     </van-popup>
     <!-- 地址弹出框 -->
     <van-popup
-      v-model:show="showcity"
+      show="showcity"
       position="bottom"
       :style="{ height: '30%' }"
     >
@@ -95,7 +95,7 @@
     </van-popup>
     <!-- 头像 -->
     <van-action-sheet
-      v-model:show="showimg"
+      show="showimg"
       cancel-text="取消"
       close-on-click-action
       @cancel="showimg = false"
@@ -109,12 +109,8 @@
   </div>
 </template>
 <script>
-<<<<<<< HEAD
 import Return from "@/components/return";
-=======
-import Return from "../../component/return";
-import AeraInfo from "../../component/dizhi";
->>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
+import AeraInfo from "@/components/dizhi";
 export default {
   components: {
     Return,

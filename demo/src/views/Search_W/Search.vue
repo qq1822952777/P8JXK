@@ -20,10 +20,7 @@
   </div>
 </template>
 <script>
-<<<<<<< HEAD
 import top from "@/components/top";
-=======
->>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
 export default {
   data() {
     return {
