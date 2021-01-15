@@ -11,6 +11,12 @@
       </template>
     </van-search>
     历史搜索
+    <ul style="width:100%;height:100%;">
+      <li style="font-size:0.5rem;" v-for="(item, index) in 5" :key="index">
+        要你管
+        <nav></nav>
+      </li>
+    </ul>
   </div>
 </template>
 <script>

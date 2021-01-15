@@ -125,10 +125,17 @@
             <div>确认</div>
           </div>
         </van-popup>
-        <div class="list-bom" v-for="(item, index) in 6" :key="index">
+        <div
+          class="list-bom"
+          v-for="(item, index) in 6"
+          :key="index"
+          @click="xq"
+        >
           <p>李老师16号到22号地理他课堂开课了</p>
           <p>时间</p>
-          <img src="/images_J/download.jpg" alt="" />李青
+          <p style="padding-top:0.2rem;">
+            <img src="/images_J/download.jpg" alt="" />李青
+          </p>
           <div>
             <span>115人报名</span>
             <span style="color:#44A426;">免费</span>
@@ -158,6 +165,9 @@ export default {
     };
   },
   methods: {
+    xq() {
+      this.$router.push({ path: "/particulars" });
+    },
     sear() {
       this.$router.push({ path: "/Search" });
     },
@@ -267,18 +277,21 @@ export default {
         padding-top: 0.2rem;
         border-radius: 0.2rem;
         margin-top: 0.5rem;
+        position: relative;
         div {
-          width: 100%;
+          width: 95%;
+          position: absolute;
+          bottom: 0;
+          right: 0.2rem;
           height: 1rem;
           line-height: 1rem;
           display: flex;
           justify-content: space-between;
         }
         img {
-          padding-top: 0.1rem;
           height: 0.7rem;
           width: 0.7rem;
-          margin-top: 0.1rem;
+          vertical-align: middle;
         }
       }
       width: 100%;
