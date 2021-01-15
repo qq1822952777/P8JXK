@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <van-nav-bar
-      title="标题"
+      :title="this.$router.meta.title"
       left-text="返回"
       right-text="按钮"
       left-arrow
@@ -27,13 +27,18 @@ export default {
       alert("空");
     },
   },
-  watch: {
-    $route: {
-      handler(newval, newlog) {
-        this.title = newval.title;
-      },
-    },
-  },
+
+  // watch: {
+  //   $route: {
+  //     handler(newval, newlog) {
+  //       if (newval.path == "/login") {
+  //       } else {
+  //         console.log("13");
+  //       }
+  //       // this.title = newval.meta.title;
+  //     },
+  //   },
+  // },
 };
 </script>
 

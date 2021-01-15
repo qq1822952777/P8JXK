@@ -109,8 +109,12 @@
   </div>
 </template>
 <script>
+<<<<<<< HEAD
+import Return from "@/components/return";
+=======
 import Return from "../../component/return";
 import AeraInfo from "../../component/dizhi";
+>>>>>>> f9b2ecdd8dbe3ee842685b1528b229d4a04c6659
 export default {
   components: {
     Return,

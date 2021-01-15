@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import Return from "../../component/return";
+import Return from "@/components/return";
 export default {
   components: {
     Return,
