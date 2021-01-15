@@ -15,12 +15,13 @@
 export default {
     data() {
         return {
-            active:0
+            active:0,
+            show:true
         }
     },
     mounted() {
         
-    },
+    }
 }
 </script>
 <style lang="scss">

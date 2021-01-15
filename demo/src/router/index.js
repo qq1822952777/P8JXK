@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 import Main from '@/views/main/Main'
 import maiRouter from '@/views/main/mainRouter'
 import profilRouters from '../views/Profile_H'
+import Home_J from '../views/Home_J'
 
 
 const routes = [
@@ -18,6 +19,14 @@ const routes = [
     ]
   },
   {
+      path:'/AuoutCourse',
+      name:'AuoutCourse',
+      meta:{
+          isLogin:true
+      },
+      component:() => import('../views/AuoutCourse_H/AuoutCourse')
+  },
+  {
     path: '/Search',
     name: 'Search',
     component: ()=> import('../views/Search_W/Search')   
@@ -28,8 +37,11 @@ const routes = [
     component: () => import('../views/Login_J/Login')
   },
   // 将路由向下扩展 ... 
-  ...profilRouters
+  ...profilRouters,
+  ...Home_J
 ]
+
+
 
 const router = new VueRouter({
   routes

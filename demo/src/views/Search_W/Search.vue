@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import top from "../../../components/top.vue";
+import top from "@/components/top";
 export default {
   components: {
     top,

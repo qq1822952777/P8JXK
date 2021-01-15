@@ -13,7 +13,7 @@
     </van-swipe>
     <!-- 名师导航 -->
     <nav>
-      <div>
+      <div @click="topTeacher()">
         <img src="/images_J/1.png">
         <span>名师</span>
       </div>
@@ -543,7 +543,12 @@ export default {
     goTop(event){
       alert('别急内容改造中')
       // location.href = '/Home'
+    },
+    // 名师页跳转
+    topTeacher(){
+      this.$router.push({path:'/TopTeacher'})
     }
+    
   },
 }
 </script>

@@ -11,14 +11,6 @@ const routers = [
         component:() => import('../Course_W/Course')
     },
     {
-        path:'AuoutCourse',
-        name:'AuoutCourse',
-        meta:{
-            isLogin:true
-        },
-        component:() => import('../AuoutCourse_H/AuoutCourse')
-    },
-    {
         path:'Profile',
         name:'Profile',
         meta:{
