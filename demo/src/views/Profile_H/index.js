@@ -35,6 +35,11 @@ const routers = [
         name:'set-name',
         component:() => import('./set-name-h.vue')
     },
+    {
+        path:'/set-sex-h',
+        name:'set-sex',
+        component:() => import('./set-sex-h.vue')
+    },
     
     
 ]

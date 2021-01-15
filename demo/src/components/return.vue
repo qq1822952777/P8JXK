@@ -3,6 +3,7 @@
     <van-nav-bar
       title=""
       left-text=""
+      :right-text="txt"
       left-arrow
       @click-left="onClickLeftHJ"
       style="margin-bottom: 0.1rem"
@@ -15,8 +16,11 @@
 </template>
 <script>
 export default {
+  props:['txt'],
   data() {
-    return {};
+    return {
+
+    };
   },
   methods: {
     onClickLeftHJ() {

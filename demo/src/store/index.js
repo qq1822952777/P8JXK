@@ -15,12 +15,24 @@ export default new Vuex.Store({
       date:'',
       city:'',
       grade:'',
-      class:[]
+      class:''
     }
   },
   mutations: {
     afterRead(state,img){
       state.modifyHJ.img=img
+    },
+    nanHJ(state,val){
+      state.modifyHJ.sex=val
+    },
+    nvHJ(state,val){
+      state.modifyHJ.sex=val
+    },
+    dateHJ(state,val){
+      state.modifyHJ.date=val
+    },
+    cityHJ(state,val){
+      state.modifyHJ.city=val
     }
   },
   actions: {
