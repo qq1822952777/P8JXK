@@ -16,7 +16,9 @@ export default new Vuex.Store({
       city:'',
       grade:'',
       class:''
-    }
+    },
+    name:'',
+    token:''
   },
   mutations: {
     afterRead(state,img){
@@ -33,6 +35,11 @@ export default new Vuex.Store({
     },
     cityHJ(state,val){
       state.modifyHJ.city=val
+    },
+    // 手机号登录
+    mobileLogin(state,{token,name}){
+      state.token = token;
+      state.name = name;
     }
   },
   actions: {

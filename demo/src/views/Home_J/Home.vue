@@ -6,10 +6,10 @@
     </header>
     <!-- 轮播图 -->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item><img src="/images_J/4.png"></van-swipe-item>
-      <van-swipe-item><img src="/images_J/4.png"></van-swipe-item>
-      <van-swipe-item><img src="/images_J/4.png"></van-swipe-item>
-      <van-swipe-item><img src="/images_J/4.png"></van-swipe-item>
+      <van-swipe-item
+      v-for="(item,index) in swipeimgs"
+      :key="index"
+      ><img :src="item.banner_img"></van-swipe-item>
     </van-swipe>
     <!-- 名师导航 -->
     <nav>
@@ -274,6 +274,7 @@
   }
   // 轮播图
   .my-swipe .van-swipe-item {
+    height: 3.2rem;
     color: #fff;
     text-align: center;
     background-color: #39a9ed;
@@ -429,7 +430,7 @@
       font-size: .25rem;
       img{
         width: 100%;
-        height: 65%;
+        height: 60%;
         border-radius: 15px;
       }
       .Text{
@@ -524,11 +525,13 @@
   }
 </style>
 <script>
+import { homeswipereq,homereq } from '@/utils/api'
 export default {
   data() {
     return {
       // 回顶的显示隐藏
-      topShopw:false
+      topShopw:false,
+      swipeimgs:[]
     }
   },
   methods: {
@@ -549,6 +552,15 @@ export default {
       this.$router.push({path:'/TopTeacher'})
     }
     
+  },
+  created() {
+    // 轮播图请求
+    homeswipereq().then((res)=>{
+      this.swipeimgs = res
+    })
+    homereq().then((res)=>{
+      console.log(res);
+    })
   },
 }
 </script>

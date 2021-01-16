@@ -4,13 +4,26 @@
 // 相应的请求在相应的页面 导入这个模块 解构赋值 拿取要用到的请求 使用 name_zdy().then(res=>{ },err=>{})使用它
 import server from '../server'
 
-// 定义请求
-const name_zdy = async function(){
-    var {data} = await server.get('/地址')
+// 登录请求  携带端口要求的验证参数
+const isLogin = async function({mobile,password,type}){
+    var {data} = await server.post('/api/app/login',{mobile,password,type})
+    return Promise.resolve(data)
+}
+
+// 首页轮播图请求  
+const homeswipereq = async function(){
+    var {data} = await server.get('/api/app/banner')
+    return Promise.resolve(data.data)
+}
+// 首页数据请求  
+const homereq = async function(){
+    var {data} = await server.get('/api/app/recommend/appIndex')
     return Promise.resolve(data.data)
 }
 
 // 导出请求
 export {
-    name_zdy
+    isLogin,
+    homeswipereq,
+    homereq
 }

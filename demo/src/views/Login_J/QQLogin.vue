@@ -1,17 +1,18 @@
 <template>
-    <div class="about">
-        <h1>手机号登录</h1>
+    <div class="QQLogin_box">
+        QQ登录
     </div>
 </template>
+
 <script>
 export default {
     data() {
         return {
-        
+            
         }
     },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
     
 </style>

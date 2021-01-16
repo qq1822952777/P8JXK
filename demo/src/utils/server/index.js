@@ -1,13 +1,26 @@
 import axios from 'axios'
+import store from '../../store'
+// guid.js 按照规则生成的 ID 也是请求要求携带的需求 用户的设备生成独有的ID
+import { Guid } from './guid'
+if(!localStorage.getItem('DeviceID')){
+    let id = Guid.NewGuid().ToString('N')
+    localStorage.setItem('DeviceID',id)
+}
+
+
 
 const server = axios.create({
-    baseURL:'',
-    timeout:10000
+    baseURL:' http://120.53.31.103:84',
+    timeout:20000
 })
 
-server.interceptors.request.use(config => {
-    if(localStorage.getItem('token')) {
-        config.headers.token = localStorage.getItem('token')
+server.interceptors.request.use(config => { 
+    // 获取到登陆后的 token  页面请求数据的需求 要在请求时 需要该值
+    let token = store.state.token;
+    config.headers = {
+        Authorization:`Bearer ${token}`,
+        DeviceType: 'H5',
+        DeviceID:localStorage.getItem('DeviceID')
     }
     return config
 },err => {
