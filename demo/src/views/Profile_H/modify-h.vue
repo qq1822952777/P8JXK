@@ -43,7 +43,7 @@
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
-      <li>
+      <li @click="gradeHJ">
         <span>年级</span>
         <p>
           <span class="top-txt-h gray-h">{{
@@ -52,7 +52,7 @@
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
-      <li>
+      <li @click="showclass = true">
         <span>学科</span>
         <p>
           <span class="top-txt-h gray-h">{{
@@ -62,6 +62,22 @@
         </p>
       </li>
     </ul>
+    <!-- 学科 -->
+    <van-popup class="class" v-model:show="showclass">
+      <p class="class-top">学科选择</p>
+      <ul class="class-uu">
+        <li
+          v-for="(item, index) in classlist"
+          ref="ass"
+          :class="item.falg ? 'orange-class' : ''"
+          :key="index"
+          @click="classHJ(index)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+      <button class="class-btn orange-class" @click="classH">确认</button>
+    </van-popup>
     <!-- 时间弹出框 -->
     <van-popup
       v-model:show="showdate"
@@ -89,7 +105,21 @@
       <van-area
         :area-list="areaList"
         @confirm="onAreaConfirm"
-        @cancel="bindCancel"
+        @cancel="showcity = false"
+        item-height="25px"
+      />
+    </van-popup>
+    <!-- 年级 -->
+    <van-popup
+      v-model:show="showgrade"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
+      <van-area
+        :area-list="gradelist"
+        :columns-num="1"
+        @confirm="grade"
+        @cancel="showgrade = false"
         item-height="25px"
       />
     </van-popup>
@@ -111,6 +141,7 @@
 <script>
 import Return from "@/components/return";
 import AeraInfo from "@/components/dizhi";
+import Grade from "@/components/gradelist";
 export default {
   components: {
     Return,
@@ -120,6 +151,8 @@ export default {
       showdate: false,
       showimg: false,
       showcity: false,
+      showgrade: false,
+      showclass: false,
       currentDate: new Date(),
       minDate: new Date(1970, 1, 1),
       maxDate: new Date(2021, 12, 31),
@@ -127,6 +160,47 @@ export default {
       areaList: AeraInfo,
       valueArea: "",
       arrArea: [],
+      gradelist: Grade,
+      gradeclass: "",
+      classlist: [
+        {
+          name: "语文",
+          falg: false,
+        },
+        {
+          name: "数学",
+          falg: false,
+        },
+        {
+          name: "英语",
+          falg: false,
+        },
+        {
+          name: "物理",
+          falg: false,
+        },
+        {
+          name: "化学",
+          falg: false,
+        },
+        {
+          name: "生物",
+          falg: false,
+        },
+        {
+          name: "政治",
+          falg: false,
+        },
+        {
+          name: "历史",
+          falg: false,
+        },
+        {
+          name: "地理",
+          falg: false,
+        },
+      ],
+      classapp: [],
     };
   },
   methods: {
@@ -178,24 +252,39 @@ export default {
     cityHJ() {
       this.showcity = true;
     },
-    bindCancel() {
-      this.showcity = false;
-    },
-
     onAreaConfirm(val) {
       this.showcity = false;
       this.arrArea = val;
       var addrInfo = val[0].name + "-" + val[1].name + "-" + val[2].name;
       this.valueArea = addrInfo;
-      // this.arrArea.forEach(ele=> {
-      //   console.log(ele.name);
-      // });
       this.$store.commit("cityHJ", this.valueArea);
+    },
+    // 年级
+    gradeHJ() {
+      this.showgrade = true;
+    },
+    grade(val) {
+      this.showgrade = false;
+      this.gradeclass = val[0].name;
+      this.$store.commit("gradeHJ", this.gradeclass);
+    },
+    classHJ(i) {
+      this.classlist.forEach((res, index) => {
+        if (index == i) {
+          res.falg = !res.falg;
+        }
+      });
+      this.$refs.ass.forEach(res=>{
+        console.log(res.className);
+      })
+    },
+    classH() {
+      this.showclass = false;
     },
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .modify-h {
   width: 100%;
   height: 100%;
@@ -204,8 +293,8 @@ export default {
     background-color: white;
     padding: 0 0.3rem;
     li {
-      height: 1.2rem;
-      line-height: 1.2rem;
+      height: 1.1rem;
+      line-height: 1.1rem;
       font-size: 0.3rem;
       display: flex;
       align-items: center;
@@ -240,6 +329,51 @@ export default {
       .van-uploader__input-wrapper {
         width: 100% !important;
       }
+    }
+  }
+  .class {
+    width: 90%;
+    height: 5.8rem;
+    border-radius: 0.2rem;
+    .class-top {
+      width: 100%;
+      text-align: center;
+      font-weight: 600 !important;
+      font-size: 0.3rem;
+      height: 1rem;
+      line-height: 1rem;
+    }
+    .orange-class {
+      background-color: #eb6100 !important;
+      color: white !important;
+    }
+    .class-uu {
+      width: 100%;
+      padding: 0.2rem 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      li {
+        font-size: 0.2rem;
+        width: 1.8rem;
+        height: 0.65rem;
+        line-height: 0.65rem;
+        border-radius: 0.1rem;
+        text-align: center;
+        color: rgb(104, 104, 104);
+        margin-top: 0.15rem;
+        background-color: rgba(235, 235, 235, 0.647);
+      }
+    }
+    .class-btn {
+      font-size: 0.28rem;
+      width: 30%;
+      height: 0.7rem;
+      line-height: 0.7rem;
+      border-radius: 0.1rem;
+      border: none;
+      text-align: center;
+      margin-left: 35%;
     }
   }
 }

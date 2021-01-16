@@ -72,6 +72,18 @@ const routers = [
         name:'study-card',
         component:() => import('./study-card-h.vue')
     },
+    {
+        // 设置
+        path:'/myset-h',
+        name:'myset',
+        component:() => import('./myset-h.vue')
+    },
+    {
+        // 登录
+        path:'/login-h',
+        name:'login',
+        component:() => import('./login-h.vue')
+    },
     
     
 ]
