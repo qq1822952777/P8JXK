@@ -64,7 +64,7 @@
     </ul>
     <!-- 时间弹出框 -->
     <van-popup
-      show="showdate"
+      v-model:show="showdate"
       position="bottom"
       :style="{ height: '30%' }"
     >
@@ -82,7 +82,7 @@
     </van-popup>
     <!-- 地址弹出框 -->
     <van-popup
-      show="showcity"
+      v-model:show="showcity"
       position="bottom"
       :style="{ height: '30%' }"
     >
@@ -95,7 +95,7 @@
     </van-popup>
     <!-- 头像 -->
     <van-action-sheet
-      show="showimg"
+      v-model:show="showimg"
       cancel-text="取消"
       close-on-click-action
       @cancel="showimg = false"
