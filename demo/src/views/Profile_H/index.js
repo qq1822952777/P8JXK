@@ -55,6 +55,12 @@ const routers = [
         component:() => import('./course-h.vue')
     },
     {
+        // 订单---详情
+        path:'/course-details-h',
+        name:'course-details',
+        component:() => import('./course-details-h.vue')
+    },
+    {
         // 设置个人信息---姓名
         path:'/set-name-h',
         name:'set-name',
@@ -80,6 +86,30 @@ const routers = [
             isLogin:true
         },
         component:() => import('./news-h.vue')
+    },
+    {
+        // 我的优惠券
+        path:'/coupon-h',
+        name:'coupon',
+        component:() => import('./coupon-h.vue')
+    },
+    {
+        // 学习卡
+        path:'/study-card-h',
+        name:'study-card',
+        component:() => import('./study-card-h.vue')
+    },
+    {
+        // 设置
+        path:'/myset-h',
+        name:'myset',
+        component:() => import('./myset-h.vue')
+    },
+    {
+        // 登录
+        path:'/login-h',
+        name:'login',
+        component:() => import('./login-h.vue')
     },
     
     

@@ -10,7 +10,7 @@ import profilRouters from "../views/Profile_H";       // 黄俊的个人页面�
 import Course from "../views/Course_W";               // 王盛鑫的课程页面引入的路由组件
 import Home_J from '../views/Home_J';                 // 蒋希康的首页引入的路由组件
 import Login_J from '../views/Login_J';               // 蒋希康的登录页引入的路由组件      
-
+import fore from "../views/AuoutCourse_H/index.js";   //预习
 const routes = [
   {
     path: "/",
@@ -20,29 +20,30 @@ const routes = [
     children: [...maiRouter],
   },
   {
-      path:'/AuoutCourse',
-      name:'AuoutCourse',
-      meta:{
-          isLogin:true
-      },
-      component:() => import('../views/AuoutCourse_H/AuoutCourse')
+    path: "/AuoutCourse",
+    name: "AuoutCourse",
+    meta: {
+      isLogin: true,
+    },
+    component: () => import("../views/AuoutCourse_H/AuoutCourse"),
   },
   {
-    path: '/Search',
-    name: 'Search',
-    component: ()=> import('../views/Search_W/Search')   
+    path: "/Search",
+    name: "Search",
+    component: () => import("../views/Search_W/Search"),
   },
   {
     path: "/Login",
     name: "Login",
     component: () => import("../views/Login_J/Login"),
   },
-  // 将路由向下扩展 ... 
+  // 将路由向下扩展 ...
   ...profilRouters,
   ...Home_J,
   ...Course,
-  ...Login_J
-]
+  ...Login_J,
+  ...fore,
+];
 
 const router = new VueRouter({
   routes,
