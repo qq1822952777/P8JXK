@@ -6,6 +6,7 @@
       :right-text="txt"
       left-arrow
       @click-left="onClickLeftHJ"
+      @click-right="onClickRightHJ"
       style="margin-bottom: 0.1rem"
     />
   </div>
@@ -25,6 +26,9 @@ export default {
     onClickLeftHJ() {
       this.$router.go(-1);
     },
+    onClickRightHJ(){
+      
+    }
   },
 };
 </script>
