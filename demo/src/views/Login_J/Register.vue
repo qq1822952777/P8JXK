@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
     data() {
         return {
@@ -32,8 +33,6 @@ export default {
         // 获取验证码倒计时
         huoqu(){
             this.isdTime = true;
-            // this.verification = Math.ceil(random()*100) 
-            console.log(String(Math.ceil(Math.random()*10)));
                 let yzmdj =  setInterval(() => {
                     if(this.dTime <= 0){
                         this.dTime = 59
@@ -45,7 +44,12 @@ export default {
                 },1000);            
         },
         // 注册验证的下一步
-        LoginNext(){
+        LoginNext(){ 
+            if(this.number == '' || this.verification == ''){
+                Toast('不可为空哦');
+                return
+            }
+            Toast('绑定成功，设置您的密码');
             this.$router.push({path:'/SetPass'})
         }
     },

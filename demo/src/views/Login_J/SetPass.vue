@@ -46,9 +46,11 @@ export default {
             if(this.password == '' || this.ispassword == ''){
                 this.tishi('不可为空哦')
             }else{
-
+                Toast.success('起飞吧少年');
+                this.$router.push({path:'/Login'})
             }
         },
+        // 注册验证的下一步
         tishi(text){
             this.ispassword = ''
             Toast.fail(text)

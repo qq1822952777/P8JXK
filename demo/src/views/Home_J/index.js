@@ -10,7 +10,7 @@ const routes = [
         component:() => import('./TopTeacher')
     },
     {
-        path:'/TeaccherDetail',
+        path:'/TeaccherDetail/:id',
         name:'TeaccherDetail',
         component:() => import('./TeaccherDetail')
     }
