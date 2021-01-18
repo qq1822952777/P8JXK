@@ -40,6 +40,49 @@ const homereq = async function() {
   var { data } = await server.get("/api/app/recommend/appIndex");
   return Promise.resolve(data.data);
 };
+// 密码登录  携带端口要求的验证参数
+const isLogin = async function({ mobile, password, type }) {
+  var { data } = await server.post("/api/app/login", {
+    mobile,
+    password,
+    type,
+  });
+  return Promise.resolve(data);
+};
+// 验证码登录  携带端口要求的验证参数
+const verificationLogin = async function({ mobile, sms_type }) {
+  var { data } = await server.post("/api/app/smsCode", { mobile, sms_type });
+  return Promise.resolve(data);
+};
+// 首页轮播图请求
+const homeswipereq = async function() {
+  var { data } = await server.get("/api/app/banner");
+  return Promise.resolve(data.data);
+};
+// 首页数据请求
+const homereq = async function() {
+  var { data } = await server.get("/api/app/recommend/appIndex");
+  return Promise.resolve(data.data);
+};
+// 老师详情页数据
+const teacherDetile = async function(id) {
+  var { data } = await server.get("/api/app/teacher/" + id);
+  return Promise.resolve(data.data.teacher);
+};
+// 老师详情页的评论信息  #### 数据为空
+const teacherDiscussDetile = async function({ limit, page, teacher_id }) {
+  var { data } = await server.post("/api/app/teacher/comment", {
+    limit,
+    page,
+    teacher_id,
+  });
+  return Promise.resolve(data.data);
+};
+// 老师的关注与取消
+const isTeacherAttention = async function({ id }) {
+  var { data } = await server.get("/api/app/teacher/collect/196" + id);
+  return Promise.resolve(data.data);
+};
 // 个人信息
 const userInof = async function() {
   var { data } = await server.get("/api/app/userInfo");
@@ -55,6 +98,19 @@ const collect = async function() {
   var { data } = await server.get("/api/app/collect?type=2");
   return Promise.resolve(data);
 };
+
 // 导出请求
-export { name_zdy, course };
-export { isLogin, homeswipereq, homereq, userInof, user, collect };
+export {
+  name_zdy,
+  course,
+  isLogin,
+  homeswipereq,
+  homereq,
+  teacherDetile,
+  teacherDiscussDetile,
+  isTeacherAttention,
+  verificationLogin,
+  userInof,
+  user,
+  collect,
+};

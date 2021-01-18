@@ -14,7 +14,7 @@
             </div>  
             <div class="verification">
                 <label for="verification"><img src="/images_J/24.png"></label>
-                <input id="verification" type="password" placeholder="请输入密码" v-model="verification">
+                <input id="verification" type="text" placeholder="请输入验证码" v-model="verification">
             </div>
         </div>
         <!-- 登录按钮 -->
@@ -23,7 +23,7 @@
             <!-- 注册选项 -->
             <div class="yzOpthis">
                 <span @click="FindPassLogin()">找回密码</span>
-                <span @click="RegisterLogin()">验证码登录</span>
+                <span @click="RegisterLogin()">密码登录</span>
             </div>
         </div>
         
@@ -40,12 +40,11 @@
             </div>
         </div>
 
-
     </div> 
 </template>
 <script>
 import Return from '@/components/return'
-import { isLogin } from '@/utils/api'
+import { verificationLogin } from '@/utils/api'
 import { Toast } from 'vant';
 export default {
     data() {
@@ -71,21 +70,19 @@ export default {
                     }               
                 },1000);            
         },
-        // 登录
+        // 验证码登录
         Login(){
-            isLogin({
-                // 15810195203  6666666666
+            verificationLogin({
                 mobile:Number(this.number),
-                password:this.verification,
-                type:1
+                sms_type:'1433223'
             }).then((res)=>{
                 if(res.code != 200){
                     this.verification = ''
                     Toast.fail(res.msg);                  
                 }else{
                     Toast.success('登录成功');
-                    this.$store.commit('mobileLogin',{token:res.data.remember_token,name:res.data.nickname,tel:this.number})
-                    this.$router.push({path:'/Home'})
+                    // this.$store.commit('mobileLogin',{token:res.data.remember_token,name:res.data.nickname})
+                    // this.$router.push({path:'/Home'})
                 }              
             })
         },
@@ -97,9 +94,9 @@ export default {
         FindPassLogin(){
             this.$router.push({path:'/Register'})
         },
-        // 跳转验证码登录
+        // 跳转至密码登录
         RegisterLogin(){
-            this.$router.push({path:'/MobileLogin'})
+            this.$router.push({path:'/Login'})
         }
     },
     components:{
