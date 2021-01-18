@@ -20,6 +20,41 @@ const course = async function({ limit, page, teacher_id }) {
   });
   return Promise.resolve(data);
 };
+// 登录请求  携带端口要求的验证参数
+const isLogin = async function({ mobile, password, type }) {
+  var { data } = await server.post("/api/app/login", {
+    mobile,
+    password,
+    type,
+  });
+  return Promise.resolve(data);
+};
 
+// 首页轮播图请求
+const homeswipereq = async function() {
+  var { data } = await server.get("/api/app/banner");
+  return Promise.resolve(data.data);
+};
+// 首页数据请求
+const homereq = async function() {
+  var { data } = await server.get("/api/app/recommend/appIndex");
+  return Promise.resolve(data.data);
+};
+// 个人信息
+const userInof = async function() {
+  var { data } = await server.get("/api/app/userInfo");
+  return Promise.resolve(data);
+};
+// 修改个人信息
+const user = async function(i) {
+  var { data } = await server.put("/api/app/user?", i);
+  return Promise.resolve(data);
+};
+// 关注的老师
+const collect = async function() {
+  var { data } = await server.get("/api/app/collect?type=2");
+  return Promise.resolve(data);
+};
 // 导出请求
 export { name_zdy, course };
+export { isLogin, homeswipereq, homereq, userInof, user, collect };
