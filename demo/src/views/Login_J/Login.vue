@@ -84,7 +84,7 @@ export default {
                     Toast.fail(res.msg);                  
                 }else{
                     Toast.success('登录成功');
-                    this.$store.commit('mobileLogin',{token:res.data.remember_token,name:res.data.nickname})
+                    this.$store.commit('mobileLogin',{token:res.data.remember_token,name:res.data.nickname,tel:this.number})
                     this.$router.push({path:'/Home'})
                 }              
             })

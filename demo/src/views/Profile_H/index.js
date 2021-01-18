@@ -111,6 +111,12 @@ const routers = [
         name:'login',
         component:() => import('./login-h.vue')
     },
+    {
+        // 设置密码
+        path:'/setpass-h',
+        name:'setpass',
+        component:() => import('./setpass-h.vue')
+    },
     
     
 ]

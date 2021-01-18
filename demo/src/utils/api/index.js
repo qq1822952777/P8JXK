@@ -34,17 +34,26 @@ const teacherDiscussDetile = async function({limit,page,teacher_id}){
     var {data} = await server.post('/api/app/teacher/comment',{limit,page,teacher_id})
     return Promise.resolve(data.data)
 }
-// /api/app/teacher/collect/3
 // 老师的关注与取消
 const isTeacherAttention = async function({id}){
     var {data} = await server.get('/api/app/teacher/collect/196'+id)
     return Promise.resolve(data.data)
 }
-
-
-
-
-
+// 个人信息
+const userInof = async function(){
+    var {data} = await server.get('/api/app/userInfo')
+    return Promise.resolve(data)
+}
+// 修改个人信息
+const user= async function(i){
+    var {data} = await server.put('/api/app/user?',i)
+    return Promise.resolve(data)
+}
+// 关注的老师
+const collect= async function(){
+    var {data} = await server.get('/api/app/collect?type=2')
+    return Promise.resolve(data)
+}
 // 导出请求
 export {
     isLogin,
@@ -53,6 +62,8 @@ export {
     teacherDetile,
     teacherDiscussDetile,
     isTeacherAttention,
-    verificationLogin,
-    
+    verificationLogin,    
+    userInof,
+    user,
+    collect
 }

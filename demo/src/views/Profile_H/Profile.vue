@@ -4,16 +4,12 @@
       <div class="orange-h"></div>
       <div class="name-h">
         <div class="name-h-top" @click="modifyHJ">
-          <img
-            class="name-img-h"
-            :src="$store.state.modifyHJ.img"
-            alt=""
-          />
+          <img class="name-img-h" :src="userInfo.avatar" alt="" />
           <p>
-            <span v-if="name!=''">睡觉觉</span>
+            <span v-if="token != ''">{{ $store.state.name }}</span>
             <span v-else @click.stop="login">登录/注册</span>
           </p>
-          <van-icon class="modify-h" name="edit" />
+          <van-icon class="mod-h" name="edit" />
           <span class="name-set-h"><van-icon name="setting-o" /></span>
         </div>
         <ul class="name-h-down">
@@ -69,12 +65,13 @@
         <div class="title-h">
           <h5>订单相关</h5>
           <ul>
-            <li v-for="(item,index) in course" :key="index" @click="courseHJ(item.name)">
-              <img
-                :src="item.img"
-                alt=""
-              />
-              <p style="color: #b2b2b2">{{item.name}}</p>
+            <li
+              v-for="(item, index) in course"
+              :key="index"
+              @click="courseHJ(item.name)"
+            >
+              <img :src="item.img" alt="" />
+              <p style="color: #b2b2b2">{{ item.name }}</p>
             </li>
           </ul>
         </div>
@@ -142,6 +139,7 @@
   </div>
 </template>
 <script>
+import { userInof } from "@/utils/api";
 export default {
   data() {
     return {
@@ -162,13 +160,20 @@ export default {
           name: "约课订单",
         },
       ],
-      name:this.$store.state.modifyHJ.name
+      token: this.$store.state.token,
+      userInfo:[]
     };
+  },
+  created() {
+    userInof().then((res) => {
+      this.userInfo = res.data;
+      console.log(res.data);
+    });
   },
   methods: {
     // 登录
-    login(){
-      this.$router.push({path:'/login-h'})
+    login() {
+      this.$router.push({ path: "/login-h" });
     },
     // 修改个人信息
     modifyHJ() {
@@ -192,23 +197,23 @@ export default {
     },
     // 课程订单
     courseHJ(val) {
-      this.$router.push({ path: "/course-h" ,query:{val}});
+      this.$router.push({ path: "/course-h", query: { val } });
     },
     // 我的消息
-    newsHJ(){
-      this.$router.push({ path: "/news-h" })
+    newsHJ() {
+      this.$router.push({ path: "/news-h" });
     },
     // 优惠券
-    couponHJ(){
-      this.$router.push({path:'/coupon-h'})
+    couponHJ() {
+      this.$router.push({ path: "/coupon-h" });
     },
     // 学习卡
-    studyCardHJ(){
-      this.$router.push({path:'/study-card-h'})
+    studyCardHJ() {
+      this.$router.push({ path: "/study-card-h" });
     },
     // 设置
-    mysetHJ(){
-      this.$router.push({path:'/myset-h'})
+    mysetHJ() {
+      this.$router.push({ path: "/myset-h" });
     },
   },
 };
@@ -252,7 +257,7 @@ export default {
           right: 0.3rem;
           top: 0.3rem;
         }
-        .modify-h {
+        .mod-h {
           margin-left: 0.1rem;
           font-size: 0.4rem;
           color: orangered;
