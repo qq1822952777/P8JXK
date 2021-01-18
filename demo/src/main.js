@@ -5,7 +5,15 @@ import store from "./store";
 // 引入通用css及rem
 import "./assets/css/reset.css";
 import "./assets/css/common.css";
+
 import "./assets/js/rem";
+
+import "animate.css";
+
+import loading from "./components/index";
+Vue.use(loading);
+
+Vue.config.productionTip = false;
 
 // 移动端布局 vant
 import Vant from "vant";
