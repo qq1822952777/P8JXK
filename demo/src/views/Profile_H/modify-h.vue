@@ -5,41 +5,47 @@
       <li @click="showimg = true">
         <span>头像</span>
         <p>
-          <img :src="$store.state.modifyHJ.img" />
+          <img :src="userInfo.avatar" />
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
-      <li @click="nameHJ">
+      <li @click="nameHJ(userInfo.nickname)">
         <span>姓名</span>
         <p>
-          <span class="top-txt-h gray-h">睡觉觉</span>
+          <span class="top-txt-h gray-h">{{ userInfo.nickname }}</span>
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
       <li>
         <span>手机号码</span>
         <p>
-          <span class="top-txt-h gray-h">18738226397</span>
+          <span class="top-txt-h gray-h">{{ userInfo.mobile }}</span>
         </p>
       </li>
       <li @click="sexHJ">
         <span>性别</span>
         <p>
-          <span class="top-txt-h gray-h">{{ $store.state.modifyHJ.sex }}</span>
+          <span class="top-txt-h gray-h">{{
+            userInfo.sex == 0 ? "男" : "女"
+          }}</span>
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
       <li @click="dateHJ">
         <span>出生日期</span>
         <p>
-          <span class="top-txt-h gray-h">{{ $store.state.modifyHJ.date }}</span>
+          <span class="top-txt-h gray-h">{{ userInfo.birthday }}</span>
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
       <li @click="cityHJ">
         <span>所在城市</span>
         <p>
-          <span class="top-txt-h gray-h">{{ $store.state.modifyHJ.city }}</span>
+          <span class="top-txt-h gray-h"
+            >{{ userInfo.province_name }}-{{ userInfo.city_name }}-{{
+              userInfo.district_name
+            }}</span
+          >
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
@@ -71,7 +77,7 @@
           ref="ass"
           :class="item.falg ? 'orange-class' : ''"
           :key="index"
-          @click="classHJ(index)"
+          @click="classHJ(index, item)"
         >
           {{ item.name }}
         </li>
@@ -142,12 +148,14 @@
 import Return from "@/components/return";
 import AeraInfo from "@/components/dizhi";
 import Grade from "@/components/gradelist";
+import { userInof, user } from "@/utils/api";
 export default {
   components: {
     Return,
   },
   data() {
     return {
+      userInfo: [],
       showdate: false,
       showimg: false,
       showcity: false,
@@ -200,18 +208,25 @@ export default {
           falg: false,
         },
       ],
-      classapp: [],
+      img: "",
     };
+  },
+  created() {
+    userInof().then((res) => {
+      this.userInfo = res.data;
+    });
   },
   methods: {
     // 头像
     afterRead(file) {
-      this.showimg = false;
-      this.$store.commit("afterRead", file.content);
+      this.img = file.content;
+      user({ avatar: this.img }).then((res) => {
+        this.showimg = false;
+      });
     },
     // 姓名
-    nameHJ() {
-      this.$router.push({ path: "/set-name-h" });
+    nameHJ(name) {
+      this.$router.push({ path: "/set-name-h", query: { name } });
     },
     // 性别
     sexHJ() {
@@ -234,8 +249,10 @@ export default {
       }
       this.className = "timeClass";
       this.timeValue = `${year}-${month}-${day}`;
-      this.showdate = false;
-      this.$store.commit("dateHJ", this.timeValue);
+      console.log(this.timeValue);
+      user({ birthday: this.timeValue }).then((res) => {
+        this.showdate = false;
+      });
     },
     // 时间后缀
     formatter(type, value) {
@@ -268,15 +285,20 @@ export default {
       this.gradeclass = val[0].name;
       this.$store.commit("gradeHJ", this.gradeclass);
     },
-    classHJ(i) {
+    classHJ(i, a) {
       this.classlist.forEach((res, index) => {
         if (index == i) {
           res.falg = !res.falg;
         }
       });
-      this.$refs.ass.forEach(res=>{
-        console.log(res.className);
-      })
+      // this.classapp.forEach((res, index) => {
+      //   if (res != a.name) {
+      //     this.classapp.push(a.name);
+      //   } else {
+      //     this.classapp.splice(index, 1);
+      //   }
+      // });
+      // console.log(this.classapp);
     },
     classH() {
       this.showclass = false;

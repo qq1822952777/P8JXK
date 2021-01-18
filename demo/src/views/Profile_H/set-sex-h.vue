@@ -11,12 +11,12 @@
       <van-cell-group>
         <van-cell title="男" clickable @click="nanHJ">
           <template #right-icon>
-            <van-radio name="1" />
+            <van-radio name="0" />
           </template>
         </van-cell>
         <van-cell title="女" clickable @click="nvHJ">
           <template #right-icon>
-            <van-radio name="2" />
+            <van-radio name="1" />
           </template>
         </van-cell>
       </van-cell-group>
@@ -24,39 +24,35 @@
   </div>
 </template>
 <script>
+import { user } from "@/utils/api";
 export default {
   data() {
     return {
-      checked: this.$store.state.modifyHJ.sex=='男'?'1':'2',
+      checked: this.$store.state.modifyHJ.sex == 0 ? "1" : "2",
       righttxt: "保存",
       sex: "",
-      // nan: "男",
-      // nv: "女",
     };
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
-    onClickRight(){
-      this.$store.commit("nanHJ", this.sex);
-      this.$router.go(-1)
+    onClickRight() {
+      console.log(this.sex);
+      user({ sex: this.sex }).then((res) => {
+        this.$router.go(-1);
+      });
     },
     nanHJ() {
-      this.checked = "1";
-      if (this.checked == "1") {
-        this.sex = "男";
-      }
+      this.checked = "0";
+      this.sex = 0;
       // this.$store.commit("nanHJ", this.nan);
     },
     nvHJ() {
-      this.checked = "2";
-      if (this.checked == "2") {
-        this.sex = "女";
-      }
+      this.checked = "1";
+      this.sex = 1;
       // this.$store.commit("nvHJ", this.nv);
     },
-    
   },
 };
 </script>

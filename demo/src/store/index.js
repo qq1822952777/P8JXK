@@ -7,20 +7,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    modifyHJ:{
-      img:'https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/avatar.jpg',
-      name:'',
-      tel:'',
-      sex:'',
-      date:'',
-      city:'',
-      grade:'',
-      class:''
+    modifyHJ: {
+      grade: "",
+      class: "",
     },
-    name:'',
-    token:''   
+    name: "",
+    token: "",
   },
   mutations: {
+    getuserInfo(state, obj) {
+      state.modifyHJ.img = obj.avatar;
+      state.modifyHJ.sex = obj.sex
+      state.modifyHJ.birthday=obj.birthday
+      state.modifyHJ.city=obj.province_name+'-'+obj.city_name+'-'+obj.district_name
+    },
     afterRead(state, img) {
       state.modifyHJ.img = img;
     },
@@ -31,30 +31,34 @@ export default new Vuex.Store({
       state.modifyHJ.sex = val;
     },
     dateHJ(state, val) {
-      state.modifyHJ.date = val;
+      state.modifyHJ.birthday = val;
     },
     cityHJ(state, val) {
       state.modifyHJ.city = val;
     },
     mysetMoverHJ(state) {
-      state.modifyHJ.name = "";
+      state.token = "";
     },
     gradeHJ(state, val) {
       state.modifyHJ.grade = val;
     },
-    cityHJ(state,val){
-      state.modifyHJ.city=val
+    cityHJ(state, val) {
+      state.modifyHJ.city = val;
+    },
+    setnameHJ(state, val) {
+      state.name = val;
+      state.modifyHJ.name = val;
     },
     // 手机号登录
-    mobileLogin(state,{token,name}){
+    mobileLogin(state, { token, name, tel }) {
       state.token = token;
       state.name = name;
-    }
+      state.modifyHJ.tel = tel;
+      state.modifyHJ.name = name;
+    },
   },
-  actions: {
-  },
-  modules: {
-  },
+  actions: {},
+  modules: {},
   actions: {},
   modules: {},
   plugins: [

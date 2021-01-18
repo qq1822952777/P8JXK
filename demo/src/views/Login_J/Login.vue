@@ -83,7 +83,7 @@ export default {
                     this.verification = ''
                     Toast.fail(res.msg);                  
                 }else{
-                    this.$store.commit('mobileLogin',{token:res.data.remember_token,name:res.data.nickname})
+                    this.$store.commit('mobileLogin',{token:res.data.remember_token,name:res.data.nickname,tel:this.number})
                     this.$router.push({path:'/Home'})
                 }              
             })
