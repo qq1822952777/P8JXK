@@ -1,5 +1,8 @@
 import axios from 'axios'
 import store from '../../store'
+import Vue from "vue";
+import loading from "@/components/loading.vue";
+Vue.use(loading);
 // guid.js 按照规则生成的 ID 也是请求要求携带的需求 用户的设备生成独有的ID
 import { Guid } from './guid'
 if(!localStorage.getItem('DeviceID')){
@@ -15,6 +18,8 @@ const server = axios.create({
 })
 
 server.interceptors.request.use(config => { 
+    // 请求时显示
+    Vue.$loading.show();
     // 获取到登陆后的 token  页面请求数据的需求 要在请求时 需要该值
     let token = store.state.token;
     config.headers = {
@@ -28,6 +33,8 @@ server.interceptors.request.use(config => {
 })
 
 server.interceptors.response.use(res => {
+    // 响应式隐藏
+    Vue.$loading.hide();
     if(res.data === "无效的token") {
         alert('token无效 ，请重新登录 跳转至登录页')
     }else{
