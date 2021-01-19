@@ -146,7 +146,6 @@
   </div>
 </template>
 <script>
-import { course } from "@/utils/api";
 export default {
   data() {
     return {
@@ -164,11 +163,6 @@ export default {
       sst6: 0,
       scr: "scroll",
     };
-  },
-  created() {
-    course({ limit: 10, page: 1, teacher_id: 196 }).then((res) => {
-      console.log(res);
-    });
   },
   methods: {
     xq() {
