@@ -144,108 +144,30 @@
         </div>
       </div>
     </div>
-    <!-- 知名老师 -->
-    <div class="todyLesson">
-      <div>
-      <p></p>
-      <span>知名老师</span>
+    <!-- 后台接受的老师的数据渲染 -->
+    <div v-for="item in teachers" :key="item.channel_info.id">
+      <div class="todyLesson">
+        <div>
+        <p></p>
+        <span>{{ item.channel_info.name }}</span>
+        </div>
+        <div class="ccc">
+          更多>>
+        </div>
       </div>
-      <div class="ccc">
-        更多>>
+      <div class="teacher">
+        <div class="lis" v-for="itm in item.list" :key="itm.teacher_id" @click="gotoTeacherDetile(itm.teacher_id ? itm.teacher_id : itm.id)">
+          <img :src="itm.teacher_avatar ? itm.teacher_avatar : itm.thumb_img">
+          <div>
+            <p><b>{{itm.teacher_name ? itm.teacher_name : itm.title}}</b><span class="ccc">{{itm.created_at ? itm.created_at :'北京大学'}}</span></p>
+            <p class="ccc detail">{{itm.introduction ? itm.introduction :itm.description}}</p>
+          </div>
+        </div>       
       </div>
     </div>
-    <div class="teacher">
-      <div class="lis">
-        <img src="/images_J/14.png">
-        <div>
-          <p><b>李湘老师</b><span class="ccc">北京大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-      <div class="lis">
-        <img src="/images_J/15.png">
-        <div>
-          <p><b>顾未易老师</b><span class="ccc">南京大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-      <div class="lis">
-        <img src="/images_J/16.png">
-        <div>
-          <p><b>陈一丹老师</b><span class="ccc">上海大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-    </div>
-    <!-- 明星老师 -->
-    <div class="todyLesson">
-      <div>
-      <p></p>
-      <span>明星老师</span>
-      </div>
-      <div class="ccc">
-        更多>>
-      </div>
-    </div>
-    <div class="teacher">
-      <div class="lis">
-        <img src="/images_J/17.png">
-        <div>
-          <p><b>司徒末老师</b><span class="ccc">清华大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-      <div class="lis">
-        <img src="/images_J/18.png">
-        <div>
-          <p><b>五一老师</b><span class="ccc">北京大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-      <div class="lis">
-        <img src="/images_J/19.png">
-        <div>
-          <p><b>赵乔一老师</b><span class="ccc">南京大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-    </div>
-    <!-- 推荐老师 -->
-    <div class="todyLesson">
-      <div>
-      <p></p>
-      <span>推荐老师</span>
-      </div>
-      <div class="ccc">
-        更多>>
-      </div>
-    </div>
-    <div class="teacher">
-      <div class="lis">
-        <img src="/images_J/17.png">
-        <div>
-          <p><b>司徒末老师</b><span class="ccc">清华大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-      <div class="lis">
-        <img src="/images_J/18.png">
-        <div>
-          <p><b>五一老师</b><span class="ccc">北京大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-      <div class="lis">
-        <img src="/images_J/19.png">
-        <div>
-          <p><b>赵乔一老师</b><span class="ccc">南京大学</span></p>
-          <p class="ccc detail">随时随地在线上课，更好的服务还在在线学习的同学学到好知识</p>
-        </div>
-      </div>
-    </div>
-    <!-- 回顶 -->
+    <!-- 拖拽的邮件小球 -->
     <div v-show="topShopw" class="gotoTop" @click="goTop($event)">
-      <van-icon name="audio" />
+      <van-icon name="envelop-o" />
     </div>
   </div>
 </template>
@@ -468,7 +390,7 @@
   // 老师详情
   .teacher{
     width: 100%;
-    height: 6rem;
+    // height: 6rem;
     // background-color: salmon;
     font-size: .3rem;
     padding: .2rem;
@@ -478,17 +400,20 @@
     .lis{
       width: 100%;
       height: 32%;
+      margin: .2rem 0;
       // background-color: sandybrown;
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       align-items: center;
       img{
-        width: 1.2rem;
-        height: 1.2rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
         margin-right: .2rem;
       }
       div{
-        height: 50%;
+        height: 1rem;
+        padding: .1rem 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -509,7 +434,7 @@
       }
     }
   }
-  // 回顶
+  // 邮件小组件
   .gotoTop{
     width: 1.5rem;
     height: 1.5rem;
@@ -531,7 +456,8 @@ export default {
     return {
       // 回顶的显示隐藏
       topShopw:false,
-      swipeimgs:[]
+      swipeimgs:[],
+      teachers:[]
     }
   },
   methods: {
@@ -547,11 +473,14 @@ export default {
       alert('别急内容改造中')
       // location.href = '/Home'
     },
-    // 名师页跳转
+    // nav名师页跳转
     topTeacher(){
       this.$router.push({path:'/TopTeacher'})
+    },
+    // 跳转至老师详情页
+    gotoTeacherDetile(id){
+      this.$router.push({name:'TeaccherDetail',params:{id}})
     }
-    
   },
   created() {
     // 轮播图请求
@@ -559,7 +488,8 @@ export default {
       this.swipeimgs = res
     })
     homereq().then((res)=>{
-      console.log(res);
+      this.teachers = res;
+      // console.log(res);
     })
   },
 }

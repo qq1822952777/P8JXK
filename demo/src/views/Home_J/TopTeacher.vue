@@ -72,7 +72,7 @@ export default {
     methods: {
         // 跳转详情页
         TeaccherDetail(){
-            this.$router.push({path:'/TeaccherDetail'})
+            this.$router.push({name:'TeaccherDetail',params:196})
         }
     },
     components:{
@@ -80,7 +80,7 @@ export default {
     }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
     .TopTeacher_box::-webkit-scrollbar{
         display: none;
     }
@@ -120,7 +120,7 @@ export default {
             margin-right: .2rem;
         }
         div{
-            height: 50%;
+            height: 1rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;

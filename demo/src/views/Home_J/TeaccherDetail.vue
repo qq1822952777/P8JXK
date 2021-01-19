@@ -4,14 +4,14 @@
         </header>
         <div class="goBack" @click="goBack()">＜</div>
         <!-- 老师简介 -->
-        <div class="teacher">
+        <div class="teacher" v-for="item in teacherDetiles" :key="item.id">
             <div class="top">
                 <div class="cotent">
-                    <img src="/images_J/17.png">
+                    <img :src="item.avatar">
                     <div>
-                        <p><b>司徒末老师</b></p>
+                        <p><b>{{item.real_name ? item.real_name : 'xxx'}}老师</b></p>
                         <p class="ccc">
-                            <span>女</span>
+                            <span>男</span>
                             <span>32岁</span>
                             <span>10年教龄</span>
                             <span>关注数1012</span>
@@ -20,7 +20,7 @@
                 </div>
                 <div :class=" careClass ?'isguanzhu':'guanzhu'" @click="careClass = !careClass">
                     <div class="yuan"><van-icon name="like" /></div>
-                    <div class="org">{{careClass?'已关注':'关注'}}</div>
+                    <div class="org" @click="IsTeacherAttention()">{{careClass?'已关注':'关注'}}</div>
                 </div>
             </div>
             <div class="bottom">
@@ -31,11 +31,15 @@
             </div>
         </div>
         <!-- 评价信息 -->
-        <van-tabs v-model="active" @click="istitle(active)">
-            <van-tab title="老师信息"></van-tab>
-            <van-tab title="学员评价"></van-tab>
-            <van-tab title="主讲课程"></van-tab>
-        </van-tabs>
+        <van-sticky class="waibaoguo">
+            <van-button type="primary">
+                <van-tabs v-model="active" @click="istitle(active)">
+                    <van-tab title="老师信息"></van-tab>
+                    <van-tab title="学员评价"></van-tab>
+                    <van-tab title="主讲课程"></van-tab>
+                </van-tabs>
+            </van-button>
+        </van-sticky>        
         <!-- 老师信息 -->
         <div class="teacherinfo" v-show="active === 0">
             <div class="scrollbox">
@@ -99,11 +103,14 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
+import { teacherDetile,teacherDiscussDetile,isTeacherAttention } from '@/utils/api'
 export default {
     data() {
         return {
             careClass:false,
-            active:0
+            active:0,
+            teacherDetiles:[]
         }
     },
     methods: {
@@ -113,12 +120,40 @@ export default {
         },
         // 评价title
         istitle(ind){
-            console.log(ind);
+            // console.log(ind);
         },
         // ￥￥￥￥￥￥￥￥ 这里未完善
         make(){
             this.$router.push({path:'/Home'})
+        },
+        // 关注/取关
+        IsTeacherAttention(){
+            isTeacherAttention({id:this.$route.params.id}).then((res)=>{
+                if(res.flag == 1){
+                    Toast({
+                    message: '把爱收藏起来',
+                    icon: 'like-o',
+                    });
+                }else{
+                    Toast({
+                    message: '你不爱我了'
+                    });
+                }
+            })
         }
+    },
+    created() {
+        // 获取老师
+        teacherDetile(this.$route.params.id).then((res)=>{
+            this.teacherDetiles.push(res)
+            // console.log(this.teacherDetiles);
+        })
+        // 获取评论信息  #### 数据为空
+        teacherDiscussDetile({limit:5,page:1,teacher_id:Number(this.$route.params.id)}).then((res)=>{
+            // console.log(res);
+        })
+        // 
+        
     },
 }
 </script>
@@ -171,6 +206,12 @@ export default {
                 width: 90%;
                 // background-color: chartreuse;
                 display: flex;
+                img{
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    border-radius: 50%;
+                    margin-top: .2rem;
+                }
                 div{
                     width: 80%;
                     height: 100%;
@@ -441,5 +482,7 @@ export default {
             color: #ffffff;
         }
     }
+    // nav吸顶框
+    
 
 </style>
