@@ -4,7 +4,10 @@
       <div class="orange-h"></div>
       <div class="name-h">
         <div class="name-h-top" @click="modifyHJ">
-          <img class="name-img-h" :src="userInfo.avatar" alt="" />
+          <div class="name-img-h">
+            <img :src="userInfo.avatar" alt="" multiple />
+          </div>
+          <img src="" class="elf">
           <p>
             <span v-if="token != ''">{{ userInfo.nickname }}</span>
             <span v-else @click.stop="login">登录/注册</span>
@@ -161,7 +164,7 @@ export default {
         },
       ],
       token: this.$store.state.token,
-      userInfo:[]
+      userInfo: [],
     };
   },
   created() {
@@ -249,8 +252,22 @@ export default {
         padding: 0.3rem;
         .name-img-h {
           width: 1.1rem;
+          height: 1.1rem;
           border-radius: 50%;
           margin-right: 0.3rem;
+          overflow: hidden;
+          background-color: #ccc;
+          position: relative;
+          img{
+            position: absolute;    
+            top: 0;    
+            right: 0;    
+            bottom: 0;    
+            left: 0;    
+            margin: auto;    
+            width: 1.1rem;
+            // transform:scale(1.8);
+          }
         }
         .name-set-h {
           position: absolute;

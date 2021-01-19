@@ -62,14 +62,14 @@
         <span>学科</span>
         <p>
           <span class="top-txt-h gray-h">{{
-            
+            $store.state.modifyHJ.class
           }}</span>
           <van-icon class="gray-h" name="arrow" />
         </p>
       </li>
     </ul>
     <!-- 学科 -->
-    <van-popup class="class" v-model:show="showclass">
+    <van-popup class="class" v-model="showclass">
       <p class="class-top">学科选择</p>
       <ul class="class-uu">
         <li
@@ -85,11 +85,7 @@
       <button class="class-btn orange-class" @click="classH">确认</button>
     </van-popup>
     <!-- 时间弹出框 -->
-    <van-popup
-      v-model:show="showdate"
-      position="bottom"
-      :style="{ height: '30%' }"
-    >
+    <van-popup v-model="showdate" position="bottom" :style="{ height: '30%' }">
       <van-datetime-picker
         v-model="currentDate"
         type="date"
@@ -103,11 +99,7 @@
       />
     </van-popup>
     <!-- 地址弹出框 -->
-    <van-popup
-      v-model:show="showcity"
-      position="bottom"
-      :style="{ height: '30%' }"
-    >
+    <van-popup v-model="showcity" position="bottom" :style="{ height: '30%' }">
       <van-area
         :area-list="areaList"
         @confirm="onAreaConfirm"
@@ -137,7 +129,7 @@
       @cancel="showimg = false"
       @select="afterRead"
     >
-      <van-uploader class="setimg-h" :after-read="afterRead">拍照</van-uploader>
+      <p @click="pai" class="setimg-h">拍照</p>
       <van-uploader class="setimg-h" :after-read="afterRead"
         >从手机相册选择</van-uploader
       >
@@ -166,6 +158,8 @@ export default {
       maxDate: new Date(2021, 12, 31),
       timeValue: "",
       areaList: AeraInfo,
+      valueArea: "",
+      arrArea: [],
       gradelist: Grade,
       gradeclass: "",
       classlist: [
@@ -222,6 +216,13 @@ export default {
         this.showimg = false;
       });
     },
+    pai() {
+      this.img =
+        "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1557122104,3885355970&fm=26&gp=0.jpg";
+      user({ avatar: this.img }).then((res) => {
+        this.showimg = false;
+      });
+    },
     // 姓名
     nameHJ(name) {
       this.$router.push({ path: "/set-name-h", query: { name } });
@@ -245,9 +246,10 @@ export default {
       if (day >= 1 && day <= 9) {
         day = `0${day}`;
       }
+      this.className = "timeClass";
       this.timeValue = `${year}-${month}-${day}`;
       console.log(this.timeValue);
-      user({ birthday: `${year}-${month}-${day}` }).then((res) => {
+      user({ birthday: this.timeValue }).then((res) => {
         this.showdate = false;
       });
     },
@@ -268,16 +270,15 @@ export default {
     },
     onAreaConfirm(val) {
       user({
-        province_name:val[0].code,
-        province_name:val[0].name,
-        city_id:val[1].code,
-        city_name:val[1].name,
-        district_id:val[2].code,
-        district_name:val[2].name
+        province_name: val[0].name,
+        province_id: val[0].code,
+        city_name: val[1].name,
+        city_id: val[1].code,
+        district_name: val[2].name,
+        district_id: val[2].code,
       }).then((res) => {
         this.showcity = false;
       });
-      // this.$store.commit("cityHJ", this.valueArea);
     },
     // 年级
     gradeHJ() {
@@ -286,7 +287,6 @@ export default {
     grade(val) {
       this.showgrade = false;
       this.gradeclass = val[0].name;
-      console.log(val[0].name);
       this.$store.commit("gradeHJ", this.gradeclass);
     },
     classHJ(i, a) {
@@ -295,8 +295,14 @@ export default {
           res.falg = !res.falg;
         }
       });
-          this.classapp.push(a.name);
-      console.log(this.classapp);
+      // this.classapp.forEach((res, index) => {
+      //   if (res != a.name) {
+      //     this.classapp.push(a.name);
+      //   } else {
+      //     this.classapp.splice(index, 1);
+      //   }
+      // });
+      // console.log(this.classapp);
     },
     classH() {
       this.showclass = false;
@@ -343,6 +349,8 @@ export default {
   .setimg-h {
     width: 100%;
     text-align: center;
+    height: 1rem;
+    line-height: 1rem;
     font-size: 0.3rem;
     .van-uploader__wrapper {
       width: 100%;

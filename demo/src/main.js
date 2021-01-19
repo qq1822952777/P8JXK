@@ -16,6 +16,11 @@ Vue.use(Vant);
 import { Lazyload } from "vant";
 Vue.use(Lazyload);
 
+// loding加载
+import loading from "./components/index";
+Vue.use(loading);
+
+
 // PC端布局 element-ui
 // import ElementUI from "element-ui";
 // import "element-ui/lib/theme-chalk/index.css";

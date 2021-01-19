@@ -161,6 +161,7 @@ export default {
       .nei {
         border-top: 1px solid rgb(240, 240, 240);
         padding: 0.1rem 0;
+        height: .8rem;
         width: 100%;
         display: flex;
         justify-content: space-between;
