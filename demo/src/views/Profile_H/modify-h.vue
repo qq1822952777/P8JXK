@@ -62,7 +62,7 @@
         <span>学科</span>
         <p>
           <span class="top-txt-h gray-h">{{
-            $store.state.modifyHJ.class
+            
           }}</span>
           <van-icon class="gray-h" name="arrow" />
         </p>
@@ -166,8 +166,6 @@ export default {
       maxDate: new Date(2021, 12, 31),
       timeValue: "",
       areaList: AeraInfo,
-      valueArea: "",
-      arrArea: [],
       gradelist: Grade,
       gradeclass: "",
       classlist: [
@@ -247,10 +245,9 @@ export default {
       if (day >= 1 && day <= 9) {
         day = `0${day}`;
       }
-      this.className = "timeClass";
       this.timeValue = `${year}-${month}-${day}`;
       console.log(this.timeValue);
-      user({ birthday: this.timeValue }).then((res) => {
+      user({ birthday: `${year}-${month}-${day}` }).then((res) => {
         this.showdate = false;
       });
     },
@@ -270,11 +267,17 @@ export default {
       this.showcity = true;
     },
     onAreaConfirm(val) {
-      this.showcity = false;
-      this.arrArea = val;
-      var addrInfo = val[0].name + "-" + val[1].name + "-" + val[2].name;
-      this.valueArea = addrInfo;
-      this.$store.commit("cityHJ", this.valueArea);
+      user({
+        province_name:val[0].code,
+        province_name:val[0].name,
+        city_id:val[1].code,
+        city_name:val[1].name,
+        district_id:val[2].code,
+        district_name:val[2].name
+      }).then((res) => {
+        this.showcity = false;
+      });
+      // this.$store.commit("cityHJ", this.valueArea);
     },
     // 年级
     gradeHJ() {
@@ -283,6 +286,7 @@ export default {
     grade(val) {
       this.showgrade = false;
       this.gradeclass = val[0].name;
+      console.log(val[0].name);
       this.$store.commit("gradeHJ", this.gradeclass);
     },
     classHJ(i, a) {
@@ -291,14 +295,8 @@ export default {
           res.falg = !res.falg;
         }
       });
-      // this.classapp.forEach((res, index) => {
-      //   if (res != a.name) {
-      //     this.classapp.push(a.name);
-      //   } else {
-      //     this.classapp.splice(index, 1);
-      //   }
-      // });
-      // console.log(this.classapp);
+          this.classapp.push(a.name);
+      console.log(this.classapp);
     },
     classH() {
       this.showclass = false;

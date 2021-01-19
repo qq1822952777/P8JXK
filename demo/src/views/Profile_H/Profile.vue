@@ -6,7 +6,7 @@
         <div class="name-h-top" @click="modifyHJ">
           <img class="name-img-h" :src="userInfo.avatar" alt="" />
           <p>
-            <span v-if="token != ''">{{ $store.state.name }}</span>
+            <span v-if="token != ''">{{ userInfo.nickname }}</span>
             <span v-else @click.stop="login">登录/注册</span>
           </p>
           <van-icon class="mod-h" name="edit" />
