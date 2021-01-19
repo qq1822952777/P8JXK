@@ -36,7 +36,7 @@ const teacherDiscussDetile = async function({limit,page,teacher_id}){
 }
 // 老师的关注与取消
 const isTeacherAttention = async function({id}){
-    var {data} = await server.get('/api/app/teacher/collect/196'+id)
+    var {data} = await server.get('/api/app/teacher/collect/'+id)
     return Promise.resolve(data.data)
 }
 // 个人信息
@@ -54,6 +54,106 @@ const collect= async function(){
     var {data} = await server.get('/api/app/collect?type=2')
     return Promise.resolve(data)
 }
+
+// *****重启后的新增请求 自行寻找需求的请求********
+// 修改密码接口
+const upPassword= async function({mobile,password,sms_code}){
+    var {data} = await server.post('/api/app/password',{mobile,password,sms_code})
+    return Promise.resolve(data.data)
+}
+// 首页列表点击进入详情老师详情信息接口
+const TeacherDetile = async function({id}){
+    var {data} = await server.get('/api/app/teacher/info/'+id)
+    return Promise.resolve(data.data)
+}
+// 主讲课程
+const MainCourse = async function({limit,page,teacher_id}){
+    var {data} = await server.post('/api/app/teacher/mainCourse',{limit,page,teacher_id})
+    return Promise.resolve(data.data)
+}
+// 课程详情数据获取
+const GetCourseDetile = async function({basis_id  }){
+    var {data} = await server.get('/api/app/courseInfo/basis_id='+basis_id)
+    return Promise.resolve(data.data)
+}
+// 
+// 课程评价数据获取
+const Getevaluation = async function({id,limit,page}){
+    var {data} = await server.post('/api/app/courseComment',{id,limit,page})
+    return Promise.resolve(data.data)
+}
+// 课程收藏
+const CourseCollection = async function({course_basis_id,type = 1}){
+    var {data} = await server.post('/api/app/collect',{course_basis_id,type})
+    return Promise.resolve(data.data)
+}
+// 课程取消收藏
+const onCourseCollection = async function({collect_id}){
+    var {data} = await server.post('/api/app/collect/cancel/227/1',{collect_id})
+    return Promise.resolve(data.data)
+}
+// 课堂报名
+const ClassRegistration = async function(){
+    var {data} = await server.post('/api/app/order/downOrder')
+    return Promise.resolve(data.data)
+}
+// 立即学习页面数据
+const LearningImmediately = async function({id}){
+    var {data} = await server.get('/api/app/myStudy/course/'+id)
+    return Promise.resolve(data.data)
+}
+// video视频获取接口
+const GetVideo = async function({video_id,course_id}){
+    var {data} = await server.get('/api/app/getPlayToken/video_id='+video_id+'/course_id='+course_id)
+    return Promise.resolve(data.data)
+}
+// 获取我关注的老师接口
+const GetInterestTeacher = async function({page,limit,type = 2}){
+    var {data} = await server.get('/api/app/collect',{page,limit,type})
+    return Promise.resolve(data.data)
+}
+// 取消我关注的老师接口
+const onGetInterestTeacher = async function({collect_id,id}){
+    var {data} = await server.put('/api/app/collect/cancel/'+collect_id+'/'+id)
+    return Promise.resolve(data.data)
+}
+// 获取我的特色课内容
+const Getcharacteristic = async function(){
+    var {data} = await server.get('/api/app/myStudy/2')
+    return Promise.resolve(data.data)
+}
+// 特色课分类下拉接口
+const GetcharacteristicPulldown = async function(){
+    var {data} = await server.get('/api/app/courseClassify')
+    return Promise.resolve(data.data)
+}
+// 特色课列表数据获取
+const FeatureClassListData = async function({page,limit,course_type,classify_id,order_by,attr_val_id,is_vip}){
+    var {data} = await server.get('/api/app/courseBasis?page='+page+'&limit='+limit+'&course_type='+course_type+'&classify_id='+classify_id+'&order_by='+order_by+'&attr_val_id='+attr_val_id+'&is_vip='+is_vip)
+    return Promise.resolve(data.data)
+}
+// 课程搜索接口
+const CourseSearch = async function({limit,page,course_type,keywords}){
+    var {data} = await server.get('/api/app/courseBasis?limit='+limit+'&page='+page+'&course_type='+course_type+'&keywords='+keywords)
+    return Promise.resolve(data.data)
+}
+// 我的学习
+const myStudy = async function({type}){
+    var {data} = await server.get('/api/app/myStudy/'+type)
+    return Promise.resolve(data.data)
+}
+// 选择年纪和学科得数据
+const ageDiscipline = async function(){
+    var {data} = await server.get('/app/module/attribute/1')
+    return Promise.resolve(data.data)
+}
+// 获取城市列表数据
+const GetCity = async function(){
+    var {data} = await server.get('/api/app/sonArea/0')
+    return Promise.resolve(data.data)
+}
+
+
 // 导出请求
 export {
     isLogin,
@@ -65,5 +165,24 @@ export {
     verificationLogin,    
     userInof,
     user,
-    collect
+    collect,
+    upPassword,
+    TeacherDetile,
+    MainCourse,
+    GetCourseDetile,
+    Getevaluation,
+    CourseCollection,
+    onCourseCollection,
+    ClassRegistration,
+    LearningImmediately,
+    GetVideo,
+    GetInterestTeacher,
+    onGetInterestTeacher,
+    Getcharacteristic,
+    GetcharacteristicPulldown,
+    FeatureClassListData,
+    CourseSearch,
+    myStudy,
+    ageDiscipline,
+    GetCity
 }
