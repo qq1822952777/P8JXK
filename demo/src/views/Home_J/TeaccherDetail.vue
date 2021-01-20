@@ -123,8 +123,8 @@ export default {
         // 关注/取关
         IsTeacherAttention(){
             isTeacherAttention({id:Number(this.$route.params.id)}).then((res)=>{
-                console.log(res,Number(this.$route.params.id));
-                if(res.flag == 1){
+                console.log(res);
+                if(res.flag == 2){
                     this.careClass = true
                     Toast({
                     message: '收藏',
@@ -144,7 +144,7 @@ export default {
         teacherDetile(this.$route.params.id).then((res)=>{
             this.teacherDetiles = []
             this.teacherDetiles.push(res.teacher)
-            if(res.flag == 1){
+            if(res.flag == 2){
                 this.careClass = true
             }else{
                 this.careClass = false
