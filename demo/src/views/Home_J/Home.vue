@@ -13,7 +13,7 @@
     </van-swipe>
     <!-- 名师导航 -->
     <nav>
-      <div @click="topTeacher()">
+      <div @click="mszr()">
         <img src="/images_J/1.png">
         <span>名师</span>
       </div>
@@ -441,10 +441,6 @@ export default {
     }
   },
   methods: {
-    // nav名师页跳转
-    topTeacher(){
-      this.$router.push({path:'/TopTeacher'})
-    },
     // 跳转至老师详情页
     gotoTeacherDetile(id){
       this.$router.push({name:'TeaccherDetail',params:{id}})
@@ -473,7 +469,7 @@ export default {
     })
     homereq().then((res)=>{
       this.teachers = res;
-      console.log(res);
+      // console.log(res);
     })
   },
 }
