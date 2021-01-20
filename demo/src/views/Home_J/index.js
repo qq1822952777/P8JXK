@@ -23,6 +23,15 @@ const routes = [
         path:'/HotInformation',
         name:'HotInformation',
         component:() => import('./HotInformation')
+    },
+    {
+        path:'/CoupleBack',
+        name:'CoupleBack',
+        meta:{
+            title:'反馈提交',
+            topShow:true
+        },
+        component:() => import('./CoupleBack')
     }
 ]
 
