@@ -24,33 +24,30 @@
         <van-icon name="arrow-down" v-if="ico3 == true" />
       </div>
     </div>
-    <div class="list-w" :style="{ overflow: scr }" @click="list">
+    <div
+      class="list-w"
+      :style="{ overflow: scr }"
+      @scroll.passive="getScroll($event)"
+    >
       <div class="list-top-w">
-        <van-popup v-model="show1" position="top" :style="{ height: '60%' }">
+        <van-popup
+          v-model="show1"
+          position="top"
+          :style="{ height: '15%' }"
+          @click-overlay="topw"
+        >
           <div class="classify-w">
-            <ul>
-              <li
-                v-for="(item, index) in 10"
-                :key="index"
-                @click="sone(index)"
-                :style="{ color: sst == index ? 'red' : '' }"
-              >
-                高一
-              </li>
-            </ul>
-            <ul>
-              <li
-                v-for="(item, index) in 10"
-                :key="index"
-                @click="sone2(index)"
-                :style="{ color: sst2 == index ? 'red' : '' }"
-              >
-                物理
-              </li>
-            </ul>
+            <button>重置</button>
+            <button>确定</button>
           </div>
         </van-popup>
-        <van-popup v-model="show2" position="top" :style="{ height: '60%' }">
+
+        <van-popup
+          v-model="show2"
+          position="top"
+          :style="{ height: '60%' }"
+          @click-overlay="topw"
+        >
           <ul class="sort-w">
             <li
               v-for="(item, index) in 8"
@@ -67,14 +64,14 @@
           position="top"
           :style="{ height: '65%' }"
           class="list-vant"
+          @click-overlay="topw"
         >
           <div class="screen">
             <div class="screen-w">
               <div>
-                <p>类别</p>
                 <ul>
                   <li
-                    v-for="(item, index) in 5"
+                    v-for="(item, index) in list2"
                     :key="index"
                     @click="sone4(index)"
                     :style="[
@@ -82,39 +79,7 @@
                       { background: sst4 == index ? 'red' : '' },
                     ]"
                   >
-                    全部
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p>讲师</p>
-                <ul>
-                  <li
-                    v-for="(item, index) in 7"
-                    :key="index"
-                    @click="sone5(index)"
-                    :style="[
-                      { color: sst5 == index ? '#fff' : '' },
-                      { background: sst5 == index ? 'red' : '' },
-                    ]"
-                  >
-                    全部
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p>价格</p>
-                <ul>
-                  <li
-                    v-for="(item, index) in 4"
-                    :key="index"
-                    @click="sone6(index)"
-                    :style="[
-                      { color: sst6 == index ? '#fff' : '' },
-                      { background: sst6 == index ? 'red' : '' },
-                    ]"
-                  >
-                    全部
+                    {{ item.name }}
                   </li>
                 </ul>
               </div>
@@ -125,7 +90,7 @@
             <div>确认</div>
           </div>
         </van-popup>
-        <div
+        <!-- <div
           class="list-bom"
           v-for="(item, index) in 6"
           :key="index"
@@ -140,33 +105,149 @@
             <span>115人报名</span>
             <span style="color:#44A426;">免费</span>
           </div>
-        </div>
+        </div> -->
+        <!-- <van-pull-refresh v-model="refreshing" @refresh="onRefresh"> -->
+        <!-- <van-list
+          v-model="loading"
+          offset="1"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        > -->
+        <van-card
+          v-for="(item, index) in list"
+          :key="index"
+          :title="item.title"
+          :thumb="item.cover_img"
+          @click="xq(item.id)"
+        >
+          <template #tags>
+            <van-tag plain type="danger" color="#123" style="border:0;"
+              >已有{{ item.sales_num }}报名</van-tag
+            >
+            <van-tag plain type="danger" color="red" style="border:0;">{{
+              item.has_buy == 1 ? "已报名" : ""
+            }}</van-tag>
+          </template>
+          <template #footer>
+            <van-button size="mini" style="color:green;font-size:0.4rem;"
+              >免费</van-button
+            >
+          </template>
+        </van-card>
+        <div v-show="show" class="show-top">{{ title }}</div>
+        <!-- </van-list> -->
+        <!-- </van-pull-refresh> -->
       </div>
     </div>
   </div>
 </template>
 <script>
+import { FeatureClassListData, GetcharacteristicPulldown } from "@/utils/api";
 export default {
   data() {
     return {
+      title: "正在加载",
       ico1: true,
       ico2: true,
       ico3: true,
       show1: false,
       show2: false,
       show3: false,
-      sst: 0,
-      sst2: 0,
       sst3: 0,
       sst4: 0,
       sst5: 0,
       sst6: 0,
       scr: "scroll",
+      list: [],
+      list2: [],
+      page: 10,
+      show: false,
+      // loading: false,
+      // finished: false,
+      // refreshing: true,
     };
   },
+  created() {
+    GetcharacteristicPulldown().then((res) => {
+      this.list2 = res.appCourseType;
+    });
+    this.top();
+  },
   methods: {
-    xq() {
-      this.$router.push({ path: "/particulars" });
+    getScroll(event) {
+      let scrollBottom =
+        event.target.scrollHeight -
+        event.target.scrollTop -
+        event.target.clientHeight;
+      // console.log(scrollBottom);
+
+      if (scrollBottom == 0) {
+        if (this.page == 10) {
+          this.show = true;
+          let aa = setTimeout(() => {
+            this.page = 15;
+            this.top();
+            this.show = false;
+            clearInterval(aa);
+          }, 2000);
+        } else {
+          let tt = setTimeout(() => {
+            this.title = "已加载完成呢。。。";
+            setTimeout(() => {
+              this.show = false;
+            });
+            clearInterval(tt);
+          }, 2000);
+        }
+      }
+    },
+    // onLoad() {
+    //   // setTimeout(() => {
+    //   console.log(this.list.length);
+    //   // if (this.refreshing) {
+    //   // this.list = [];
+
+    //   // }
+
+    //   // for (let i = 0; i < 10; i++) {
+    //   // this.page = 15;
+    //   // this.top();
+    //   // }
+    //   // this.loading = false;
+
+    //   if (this.list.length >= 10) {
+    //     this.finished = false;
+    //   }
+    //   this.page = 15;
+    //   this.top();
+    //   this.refreshing = false;
+    //   // }, 1000);
+    //   // clearInterval(tt);
+    // },
+    // onRefresh() {
+    //   // 清空列表数据
+    //   this.finished = false;
+
+    //   // 重新加载数据
+    //   // 将 loading 设置为 true，表示处于加载状态
+    //   this.loading = true;
+    //   this.onLoad();
+    // },
+    top() {
+      FeatureClassListData({ page: this.page }).then((res) => {
+        console.log(res);
+        this.list = res.list;
+      });
+    },
+    topw() {
+      this.ico2 = true;
+      this.ico3 = true;
+      this.ico1 = true;
+    },
+    xq(id) {
+      console.log(id);
+      this.$router.push({ path: "/particulars", query: { id: id } });
     },
     sear() {
       this.$router.push({ path: "/Search" });
@@ -182,18 +263,6 @@ export default {
     },
     sone3(index) {
       this.sst3 = index;
-    },
-    sone2(index) {
-      this.sst2 = index;
-    },
-    list() {
-      // this.ico2 = true;
-      // this.ico3 = true;
-      // this.ico1 = true;
-    },
-    sone(index) {
-      console.log(index);
-      this.sst = index;
     },
     icoch() {
       this.ico1 = !this.ico1;
@@ -267,6 +336,35 @@ export default {
       height: 100%;
       position: relative;
       border: 1px solid #fff;
+      .show-top {
+        width: 100%;
+        height: 1rem;
+        background: rgb(221, 219, 219);
+        font-size: 0.3rem;
+        text-align: center;
+        line-height: 1rem;
+        transition: all 0.8s linear;
+      }
+      .classify-w {
+        width: 100%;
+        height: 0.7rem;
+        display: flex;
+        font-size: 0.3rem;
+        justify-content: space-evenly;
+        button {
+          width: 45%;
+          height: 100%;
+          border: 0;
+          border: 0.01rem solid rgb(189, 189, 189);
+        }
+        button:nth-child(1) {
+          background: #fff;
+        }
+        button:nth-child(2) {
+          background: red;
+          color: #fff;
+        }
+      }
       .list-bom {
         font-size: 0.4rem;
         width: 7rem;
@@ -295,20 +393,6 @@ export default {
         }
       }
       width: 100%;
-      .classify-w {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        font-size: 0.4rem;
-        ul {
-          width: 50%;
-          li {
-            width: 100%;
-            height: 1rem;
-            text-align: center;
-          }
-        }
-      }
       .sort-w {
         width: 100%;
         height: 100%;
@@ -352,6 +436,8 @@ export default {
                 line-height: 0.8rem;
                 border-radius: 0.2rem;
                 margin-left: 0.2rem;
+                background: rgb(221, 220, 220);
+                margin-top: 0.2rem;
               }
             }
           }
