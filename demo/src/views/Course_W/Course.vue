@@ -327,7 +327,7 @@ export default {
   }
   .list-w {
     width: 100%;
-    height: 10.3rem;
+    height: 82%;
     // background: chartreuse;
     // overflow-x: hidden;
     // overflow-y: scroll;
