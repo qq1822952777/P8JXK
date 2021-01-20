@@ -27,7 +27,7 @@ const homereq = async function(){
 // 老师详情页数据
 const teacherDetile = async function(id){
     var {data} = await server.get('/api/app/teacher/'+id)
-    return Promise.resolve(data.data.teacher)
+    return Promise.resolve(data.data)
 }
 // 老师详情页的评论信息  #### 数据为空
 const teacherDiscussDetile = async function({limit,page,teacher_id}){
@@ -152,6 +152,16 @@ const GetCity = async function(){
     var {data} = await server.get('/api/app/sonArea/0')
     return Promise.resolve(data.data)
 }
+// 首页点击的更多老师阵容
+// /api/app/teacher/search/attrs?page=1&limit=10&
+const GetMoreTeacher = async function({page,limit}){
+    var {data} = await server.get('/api/app/teacher/search/attrs?page='+page+'&limit='+limit+'&')
+    return Promise.resolve(data.data)
+}
+
+
+
+
 
 
 // 导出请求
@@ -184,5 +194,6 @@ export {
     CourseSearch,
     myStudy,
     ageDiscipline,
-    GetCity
+    GetCity,
+    GetMoreTeacher
 }

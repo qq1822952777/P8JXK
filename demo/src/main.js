@@ -7,6 +7,9 @@ import "./assets/css/reset.css";
 import "./assets/css/common.css";
 import "./assets/js/rem";
 
+// 转场动画引入
+import 'animate.css';
+
 // 移动端布局 vant
 import Vant from "vant";
 import "vant/lib/index.css";
@@ -20,6 +23,9 @@ Vue.use(Lazyload);
 import loading from "./components/index";
 Vue.use(loading);
 
+// 引入拖拽小球的js逻辑
+import vDrag from './components/drag'
+Vue.directive('drag', vDrag)
 
 // PC端布局 element-ui
 // import ElementUI from "element-ui";
