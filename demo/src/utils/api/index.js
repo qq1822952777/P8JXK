@@ -99,6 +99,7 @@ const GetCourseDetile = async function(id) {
 //
 // 课程评价数据获取
 const Getevaluation = async function({ id, limit, page }) {
+  console.log(id, limit, page);
   var { data } = await server.post("/api/app/courseComment", {
     id,
     limit,
@@ -115,11 +116,10 @@ const CourseCollection = async function({ course_basis_id, type = 1 }) {
   return Promise.resolve(data.data);
 };
 // 课程取消收藏
-const onCourseCollection = async function({ collect_id }) {
-  var { data } = await server.post("/api/app/collect/cancel/227/1", {
-    collect_id,
-  });
-  return Promise.resolve(data.data);
+const onCourseCollection = async function({ id, type }) {
+  console.log(id, type);
+  var { data } = await server.post(`/api/app/collect/cancel/${id}/${type}`);
+  return Promise.resolve(data);
 };
 // 课堂报名
 const ClassRegistration = async function(obj) {
