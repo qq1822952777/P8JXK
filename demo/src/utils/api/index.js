@@ -83,8 +83,8 @@ const Getevaluation = async function({id,limit,page}){
     return Promise.resolve(data.data)
 }
 // 课程收藏
-const CourseCollection = async function({course_basis_id,type = 1}){
-    var {data} = await server.post('/api/app/collect',{course_basis_id,type})
+const CourseCollection = async function(i){
+    var {data} = await server.post('/api/app/collect?',i)
     return Promise.resolve(data.data)
 }
 // 课程取消收藏
@@ -98,8 +98,8 @@ const ClassRegistration = async function(){
     return Promise.resolve(data.data)
 }
 // 立即学习页面数据
-const LearningImmediately = async function({id}){
-    var {data} = await server.get('/api/app/myStudy/course/'+id)
+const LearningImmediately = async function(){
+    var {data} = await server.get('/api/app/myStudy/course/189')
     return Promise.resolve(data.data)
 }
 // video视频获取接口

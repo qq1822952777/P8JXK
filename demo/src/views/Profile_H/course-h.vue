@@ -10,15 +10,15 @@
     </van-tabs>
     <div
       v-for="(item, index) in doing"
-      @click="details(item)"
+      @click="details(item.name)"
       :key="index"
       class="course-dv-h"
     >
       <p class="course-dv-top-h">
         <span class="course-dv-gray-h">订单编号：1101201805210000001</span>
         <span
-          :class="item == '待支付' ? 'course-dv-red-h' : 'course-dv-gray-h'"
-          >{{ item }}</span
+          :class="item.name == '待支付' ? 'course-dv-red-h' : 'course-dv-gray-h'"
+          >{{ item.name }}</span
         >
       </p>
       <div class="course-dv-body-h">
@@ -35,11 +35,11 @@
       <div class="course-dv-down-h">
         <div class="nei">
           <p class="course-red">
-            <span v-if="item < 2"
+            <span v-if="index < 1"
               >您还有21时09分25秒时间来付款订单超时将自动取消</span
             >
           </p>
-          <button class="course-btn">立即支付</button>
+          <button v-if="item.name!='已取消'" class="course-btn">{{ item.code }}</button>
         </div>
       </div>
     </div>
@@ -73,20 +73,28 @@ export default {
         },
       ],
       doing: [
-        "待支付",
-        "已完成",
-        "待收货",
-        "已取消",
-        "待支付",
-        "已完成",
-        "待收货",
-        "已取消",
+        {
+          name: "待支付",
+          code: "立即支付",
+        },
+        {
+          name: "已完成",
+          code: "去评价",
+        },
+        {
+          name: "待收货",
+          code: "确认收货",
+        },
+        {
+          name: "已取消",
+          code: "立即支付",
+        },
       ],
     };
   },
   methods: {
     details(val) {
-        this.$router.push({ path: "/course-details-h",query:{val} });
+      this.$router.push({ path: "/course-details-h", query: { val } });
     },
   },
 };
@@ -161,7 +169,6 @@ export default {
       .nei {
         border-top: 1px solid rgb(240, 240, 240);
         padding: 0.1rem 0;
-        height: .8rem;
         width: 100%;
         display: flex;
         justify-content: space-between;

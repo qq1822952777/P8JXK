@@ -15,6 +15,9 @@ export default new Vuex.Store({
     token: "",
   },
   mutations: {
+    classH(state,val){
+      state.modifyHJ.class = val
+    },
     afterRead(state, img) {
       state.modifyHJ.img = img;
     },

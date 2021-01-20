@@ -52,9 +52,7 @@
         <img src="" alt="" />
         <div class="collection-dv-h">
           <div>
-            <h4>
-              轻松学说普通话
-            </h4>
+            <h4>轻松学说普通话</h4>
             <span class="collection-gray-h">845人已报名</span>
           </div>
           <span class="collection-green-h">免费</span>
@@ -65,12 +63,18 @@
 </template>
 <script>
 import Return from "@/components/return";
+import { CourseCollection } from "@/utils/api";
 export default {
   components: {
     Return,
   },
   data() {
     return {};
+  },
+  created() {
+    CourseCollection({course_basis_id:1,type: 1}).then(res=>{
+      console.log(res);
+    })
   },
   methods: {},
 };

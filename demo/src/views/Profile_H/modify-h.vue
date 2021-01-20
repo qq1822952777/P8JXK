@@ -77,7 +77,7 @@
           ref="ass"
           :class="item.falg ? 'orange-class' : ''"
           :key="index"
-          @click="classHJ(index, item)"
+          @click="classHJ(index)"
         >
           {{ item.name }}
         </li>
@@ -108,11 +108,7 @@
       />
     </van-popup>
     <!-- 年级 -->
-    <van-popup
-      v-model:show="showgrade"
-      position="bottom"
-      :style="{ height: '30%' }"
-    >
+    <van-popup v-model="showgrade" position="bottom" :style="{ height: '30%' }">
       <van-area
         :area-list="gradelist"
         :columns-num="1"
@@ -123,7 +119,7 @@
     </van-popup>
     <!-- 头像 -->
     <van-action-sheet
-      v-model:show="showimg"
+      v-model="showimg"
       cancel-text="取消"
       close-on-click-action
       @cancel="showimg = false"
@@ -201,6 +197,7 @@ export default {
         },
       ],
       img: "",
+      class: "",
     };
   },
   created() {
@@ -289,23 +286,24 @@ export default {
       this.gradeclass = val[0].name;
       this.$store.commit("gradeHJ", this.gradeclass);
     },
-    classHJ(i, a) {
-      this.classlist.forEach((res, index) => {
-        if (index == i) {
-          res.falg = !res.falg;
+    classHJ(i) {
+      this.classlist[i].falg = !this.classlist[i].falg;
+      this.class = "";
+      this.classlist.forEach((res) => {
+        if (this.class == "") {
+          if (res.falg) {
+            this.class += res.name;
+          }
+        } else {
+          if (res.falg) {
+            this.class += "/" + res.name;
+          }
         }
       });
-      // this.classapp.forEach((res, index) => {
-      //   if (res != a.name) {
-      //     this.classapp.push(a.name);
-      //   } else {
-      //     this.classapp.splice(index, 1);
-      //   }
-      // });
-      // console.log(this.classapp);
     },
     classH() {
       this.showclass = false;
+      this.$store.commit('classH',this.class)
     },
   },
 };

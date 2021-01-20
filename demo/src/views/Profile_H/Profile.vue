@@ -256,7 +256,7 @@ export default {
           border-radius: 50%;
           margin-right: 0.3rem;
           overflow: hidden;
-          background-color: #ccc;
+          // background-color: #ccc;
           position: relative;
           img{
             position: absolute;    
