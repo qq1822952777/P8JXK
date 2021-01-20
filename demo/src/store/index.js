@@ -13,13 +13,16 @@ export default new Vuex.Store({
     },
     name: "",
     token: "",
+    tup: "",
+    id: "",
   },
   mutations: {
     getuserInfo(state, obj) {
       state.modifyHJ.img = obj.avatar;
-      state.modifyHJ.sex = obj.sex
-      state.modifyHJ.birthday=obj.birthday
-      state.modifyHJ.city=obj.province_name+'-'+obj.city_name+'-'+obj.district_name
+      state.modifyHJ.sex = obj.sex;
+      state.modifyHJ.birthday = obj.birthday;
+      state.modifyHJ.city =
+        obj.province_name + "-" + obj.city_name + "-" + obj.district_name;
     },
     afterRead(state, img) {
       state.modifyHJ.img = img;
@@ -55,6 +58,10 @@ export default new Vuex.Store({
       state.name = name;
       state.modifyHJ.tel = tel;
       state.modifyHJ.name = name;
+    },
+    add(state, id) {
+      // console.log(id);
+      state.id = id;
     },
   },
   actions: {},
