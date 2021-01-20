@@ -12,15 +12,15 @@
                         <p><b>{{item.real_name ? item.real_name : 'xxx'}}老师</b></p>
                         <p class="ccc">
                             <span>男</span>
-                            <span>32岁</span>
+                            <span>28岁</span>
                             <span>10年教龄</span>
                             <span>关注数1012</span>
                         </p>
                     </div>
                 </div>
-                <div :class=" careClass ?'isguanzhu':'guanzhu'" @click="careClass = !careClass">
+                <div :class=" careClass ?'isguanzhu':'guanzhu'" @click="IsTeacherAttention()">
                     <div class="yuan"><van-icon name="like" /></div>
-                    <div class="org" @click="IsTeacherAttention()">{{careClass?'已关注':'关注'}}</div>
+                    <div class="org">{{careClass?'已关注':'关注'}}</div>
                 </div>
             </div>
             <div class="bottom">
@@ -31,24 +31,21 @@
             </div>
         </div>
         <!-- 评价信息 -->
-        <van-sticky class="waibaoguo">
-            <van-button type="primary">
+        <van-sticky>
                 <van-tabs v-model="active" @click="istitle(active)">
                     <van-tab title="老师信息"></van-tab>
                     <van-tab title="学员评价"></van-tab>
                     <van-tab title="主讲课程"></van-tab>
                 </van-tabs>
-            </van-button>
         </van-sticky>        
         <!-- 老师信息 -->
         <div class="teacherinfo" v-show="active === 0">
             <div class="scrollbox">
-                    <div class="li" v-for="(item,index) in 10" :key="index">
-                        <span class="ccc">毕业学校</span>
-                        <span>北京大学</span>
+                    <div class="li" v-for="item in teacherDetiles" :key="item.id">
+                        <span class="ccc">代名词</span>
+                        <span>{{item.introduction}}</span>
                     </div>
             </div>            
-            <div class="teacherbtn">暂不支持预约</div>
         </div>
         <!-- 学员评价 -->
         <div class="studentinfo" v-show="active === 1">
@@ -77,40 +74,41 @@
                         </div>
                     </div>
             </div>            
-            <div class="teacheryes" @click="make()">立即约课</div>
+            <!-- <div class="teacheryes" @click="make()">立即约课</div> -->
         </div>
         <!-- 主流课程 -->
         <div class="teacherhost" v-show="active === 2">
             <div class="scrollbox">
-                    <div class="li" v-for="(item,index) in 10" :key="index">
-                        <img src="/images_J/21.png">
+                    <div v-show="zjkc.length != 0" class="li" v-for="item in zjkc" :key="item.id">
+                        <img :src="item.cover_img">
                         <div>
-                            <b>给你好声音的密码</b>
-                            <p class="ccc">讲师：小楼</p>
+                            <b>{{item.title}}</b>
+                            <p class="ccc">讲师：{{item.teachers_list[0].teacher_name}}</p>
                             <p class="price">
-                                <span class="red">￥1998.00</span>
-                                <span>
-                                    <van-icon name="shopping-cart-o" /> 520
+                                <span class="red">{{item.sales_num}}人以购买</span>
+                                <span class="pic">
+                                    <span>{{ item.price == 0 ? '免费' : item.price + '元' }}</span>
                                 </span>
                             </p>
                         </div>
                     </div>
+                    <div v-show="zjkc.length == 0" class="kong">该老师暂时没有哦~</div>
             </div>            
-            <div class="teacheryes" @click="make()">立即约课</div>
+            <!-- <div class="teacheryes" @click="make()">立即约课</div> -->
         </div>
-
     </div>  
 </template>
 
 <script>
 import { Toast } from 'vant';
-import { teacherDetile,teacherDiscussDetile,isTeacherAttention } from '@/utils/api'
+import { teacherDetile,teacherDiscussDetile,isTeacherAttention,MainCourse } from '@/utils/api'
 export default {
     data() {
         return {
-            careClass:false,
+            careClass:Boolean,
             active:0,
-            teacherDetiles:[]
+            teacherDetiles:[],
+            zjkc:[]
         }
     },
     methods: {
@@ -122,37 +120,46 @@ export default {
         istitle(ind){
             // console.log(ind);
         },
-        // ￥￥￥￥￥￥￥￥ 这里未完善
-        make(){
-            this.$router.push({path:'/Home'})
-        },
         // 关注/取关
         IsTeacherAttention(){
-            isTeacherAttention({id:this.$route.params.id}).then((res)=>{
+            isTeacherAttention({id:Number(this.$route.params.id)}).then((res)=>{
+                console.log(res,Number(this.$route.params.id));
                 if(res.flag == 1){
+                    this.careClass = true
                     Toast({
-                    message: '把爱收藏起来',
+                    message: '收藏',
                     icon: 'like-o',
                     });
                 }else{
+                    this.careClass = false
                     Toast({
-                    message: '你不爱我了'
+                    message: '撤销'
                     });
                 }
             })
         }
     },
-    created() {
+    mounted() {
         // 获取老师
         teacherDetile(this.$route.params.id).then((res)=>{
-            this.teacherDetiles.push(res)
-            // console.log(this.teacherDetiles);
+            this.teacherDetiles = []
+            this.teacherDetiles.push(res.teacher)
+            if(res.flag == 1){
+                this.careClass = true
+            }else{
+                this.careClass = false
+            }
+            // console.log(res);
+        })
+        // 获取老师主讲课程
+        MainCourse({limit:1,page:1,teacher_id:this.$route.params.id}).then((res)=>{
+            this.zjkc = res.list
+            // console.log(res.list);
         })
         // 获取评论信息  #### 数据为空
         teacherDiscussDetile({limit:5,page:1,teacher_id:Number(this.$route.params.id)}).then((res)=>{
             // console.log(res);
         })
-        // 
         
     },
 }
@@ -432,6 +439,14 @@ export default {
             width: 100%;
             padding: .2rem;
             overflow: auto;
+            .kong{
+                width: 100%;
+                height: 3rem;
+                text-align: center;
+                line-height: 3rem;
+                font-size: .4rem;
+                color: #383838;
+            }
             .li{
                 width: 100%;
                 height: 2.2rem;
@@ -445,6 +460,7 @@ export default {
                     border-radius: 10px;
                 }
                 div{
+                    width: 50%;
                     height: 100%;
                     display: flex;
                     justify-content: space-between;
@@ -459,12 +475,14 @@ export default {
                     }
                     .price{
                         width: 100%;
+                        display: block;
                         display: flex;
                         justify-content: space-between;
                         .red{
                             color: red;
                             font-weight: 600;
                         }
+                        
                     }
                 }
             }
@@ -482,7 +500,5 @@ export default {
             color: #ffffff;
         }
     }
-    // nav吸顶框
-    
 
 </style>
