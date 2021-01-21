@@ -25,7 +25,7 @@
           :key="index"
           @click="fore"
         >
-          <div><img src="/images_J/download.jpg" alt="" /></div>
+          <div><img src="@/assets/img/download.jpg" alt="" /></div>
           <div>
             <p>2019.05.05 10:30~11:30</p>
             <p>
@@ -40,7 +40,7 @@
     <div v-if="num == 2" class="bxo-ttp">
       <div class="bxo2">
         <div class="box-top" v-for="(item, index) in 4" :key="index">
-          <div><img src="/images_J/download.jpg" alt="" /></div>
+          <div><img src="@/assets/img/download.jpg" alt="" /></div>
           <div>
             <p>2019.05.05 10:30~11:30</p>
             <p>李想老师</p>
@@ -113,7 +113,7 @@
           :key="index"
           @click="fore"
         >
-          <div><img src="/images_J/download.jpg" alt="" /></div>
+          <div><img src="@/assets/img/download.jpg" alt="" /></div>
           <div>
             <p>2019.05.05 10:30~11:30</p>
             <p>李想老师 （25分钟）</p>

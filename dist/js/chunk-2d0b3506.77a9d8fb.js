@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0b3506"],{"289c":function(t,n,e){"use strict";e.r(n);var o=function(){var t=this,n=t.$createElement,e=t._self._c||n;return e("div",{},[e("van-nav-bar",{attrs:{title:"订单支付","left-text":"返回","left-arrow":""},on:{"click-left":t.onClickLeft}}),t._v(" 订单支付 ")],1)},c=[],l={data:function(){return{}},mounted:function(){},methods:{onClickLeft:function(){this.$router.go(-1)}}},r=l,u=e("2877"),i=Object(u["a"])(r,o,c,!1,null,null,null);n["default"]=i.exports}}]);
+//# sourceMappingURL=chunk-2d0b3506.77a9d8fb.js.map

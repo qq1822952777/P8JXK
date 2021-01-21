@@ -7,7 +7,7 @@
       @click-left="onClickLeft"
     />
     <div class="verify-top">
-      <div><img src="/images_J/8.png" alt="" /></div>
+      <div><img src="@/assets/img/8.png" alt="" /></div>
       <div>
         <p>如何成为旅游体验老师</p>
         <p>讲师:小楼</p>

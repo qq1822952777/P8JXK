@@ -20,7 +20,7 @@
                 </div>
                 <div :class=" careClass ?'isguanzhu':'guanzhu'" @click="IsTeacherAttention()">
                     <div class="yuan"><van-icon name="like" /></div>
-                    <div class="org">{{careClass?'已关注':'关注'}}</div>
+                    <div class="org">{{careClass?'关注':'已关注'}}</div>
                 </div>
             </div>
             <div class="bottom">

@@ -24,7 +24,7 @@
 import Return from "@/components/return";
 import { collect } from "@/utils/api";
 export default {
-  components: {
+  components: { 
     Return,
   },
   data() {

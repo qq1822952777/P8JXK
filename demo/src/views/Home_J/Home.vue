@@ -1,7 +1,7 @@
 <template>
   <div class="box_J">
     <header>
-      <img src="/images_J/logo.png" >
+      <img src="@/assets/img/logo.png" >
       <van-icon name="bulb-o" />
     </header>
     <!-- 轮播图 -->
@@ -14,15 +14,15 @@
     <!-- 名师导航 -->
     <nav>
       <div @click="mszr()">
-        <img src="/images_J/1.png">
+        <img src="@/assets/img/1.png">
         <span>名师</span>
       </div>
       <div @click="GotoClass()">
-        <img src="/images_J/2.png">
+        <img src="@/assets/img/2.png">
         <span>课表</span>
       </div>
       <div @click="Abouttheclass()">
-        <img src="/images_J/3.png">
+        <img src="@/assets/img/3.png">
         <span>约课</span>
       </div>
     </nav>
@@ -34,15 +34,15 @@
     <div class="subjectCtn">
       <div class="lef">
         <span>雅思语法专题</span>
-        <img src="/images_J/5.png">
+        <img src="@/assets/img/5.png">
       </div>
       <div class="rei">
         <div>
-          <img src="/images_J/6.png">
+          <img src="@/assets/img/6.png">
           <span>雅思语法专题</span>
         </div>
         <div>
-          <img src="/images_J/7.png">
+          <img src="@/assets/img/7.png">
           <span>雅思写作专题</span>
         </div>
       </div>
@@ -55,19 +55,19 @@
     <div class="todyLive">
       <ul>
         <li>
-          <img src="/images_J/8.png">
+          <img src="@/assets/img/8.png">
           <span>雅思英语……</span>
         </li>
         <li>
-          <img src="/images_J/9.png">
+          <img src="@/assets/img/9.png">
           <span>雅思英语……</span>
         </li>
         <li>
-          <img src="/images_J/8.png">
+          <img src="@/assets/img/8.png">
           <span>雅思英语……</span>
         </li>
         <li>
-          <img src="/images_J/9.png">
+          <img src="@/assets/img/9.png">
           <span>雅思英语……</span>
         </li>
       </ul>
@@ -84,7 +84,7 @@
     </div>
     <div class="Lesson">
       <div class="lis">
-        <img src="/images_J/10.png">
+        <img src="@/assets/img/10.png">
         <div class="Text">
           <b>时间管理四大法宝</b>
           <p>
@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class="lis">
-        <img src="/images_J/11.png">
+        <img src="@/assets/img/11.png">
         <div class="Text">
           <b>不止是一份毕业设</b>
           <p>
@@ -114,7 +114,7 @@
         </div>
       </div>
       <div class="lis">
-        <img src="/images_J/12.png">
+        <img src="@/assets/img/12.png">
         <div class="Text">
           <b>独角巡山图</b>
           <p>
@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="lis">
-        <img src="/images_J/13.png">
+        <img src="@/assets/img/13.png">
         <div class="Text">
           <b>佳作不是一蹴而就</b>
           <p>

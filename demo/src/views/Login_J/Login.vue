@@ -2,18 +2,18 @@
     <div class="Login_box">
         <Return></Return>
         <header>
-            <img src="/images_J/22.png">
+            <img src="@/assets/img/22.png">
         </header>
         <!-- 登录内容 -->
         <div class="Login_main">
             <div class="number">
-                <label for="number"><img src="/images_J/23.png"></label>
+                <label for="number"><img src="@/assets/img/23.png"></label>
                 <input id="number" type="text" placeholder="请输入手机号" v-model="number">
                 <button v-show="!isdTime" class="huoqu" @click="huoqu()">获取验证码</button>
                 <button v-show="isdTime" class="huoqu">{{dTime}}</button>
             </div>  
             <div class="verification">
-                <label for="verification"><img src="/images_J/24.png"></label>
+                <label for="verification"><img src="@/assets/img/24.png"></label>
                 <input id="verification" type="password" placeholder="请输入密码" v-model="verification">
             </div>
         </div>
@@ -31,11 +31,11 @@
         <p class="huocong">或从以下方式登录</p>
         <div class="elseLogin">
             <div @click="WXLogin()">
-                <img src="/images_J/25.png">
+                <img src="@/assets/img/25.png">
                 <span>微信登录</span>
             </div>
             <div @click="WXLogin()">
-                <img src="/images_J/26.png">
+                <img src="@/assets/img/26.png">
                 <span>QQ登录</span>
             </div>
         </div>

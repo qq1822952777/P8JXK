@@ -1,7 +1,7 @@
 <template>
   <div class="loading" v-show="show">
     <div class="animation-top">
-      <img src="/images_J/animation.gif" alt="" />
+      <img src="@/assets/img/animation.gif"/>
     </div>
   </div>
 </template>
