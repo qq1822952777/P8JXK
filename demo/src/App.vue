@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     goTop(){
-      this.$router.push({path:'/Home'})
+      this.$router.push({path:'/CoupleBack'})
     }
   },
   // 监听适配的头部组件的数值

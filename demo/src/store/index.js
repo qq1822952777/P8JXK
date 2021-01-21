@@ -13,6 +13,8 @@ export default new Vuex.Store({
     },
     name: "",
     token: "",
+    tup: "",
+    id: "",
   },
   mutations: {
     classH(state,val){
@@ -52,6 +54,10 @@ export default new Vuex.Store({
       state.name = name;
       state.modifyHJ.tel = tel;
       state.modifyHJ.name = name;
+    },
+    add(state, id) {
+      // console.log(id);
+      state.id = id;
     },
   },
   actions: {},

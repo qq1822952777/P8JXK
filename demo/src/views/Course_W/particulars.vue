@@ -22,8 +22,8 @@
             {{ list.title }}
             <van-icon
               name="star"
-              @click="sc(list.id)"
-              :color="show == true ? 'red' : ''"
+              @click="sc(list)"
+              :color="list.is_buy == 1 ? 'red' : ''"
             />
           </p>
           <p class="ys3">
@@ -46,28 +46,35 @@
                 v-html="list.course_details"
               ></p>
             </van-tab>
-            <van-tab title="关联大纲">
-              <p>课程大纲</p>
+            <van-tab style="font-size:0.3rem;" title="关联大纲">
+              <p style="font-size:0.4rem;">课程大纲</p>
               <ul>
-                <li></li>
+                <li
+                  v-for="(item, index) in list3"
+                  :key="index"
+                  style="margin-top:0.3rem;color:red;"
+                >
+                  {{ item.periods_title }}
+                </li>
               </ul>
             </van-tab>
             <van-tab title="课程评价">
-              <div class="evaluate" v-for="(item, index) in 3" :key="index">
+              <div class="evaluate" v-for="(item, index) in list4" :key="index">
                 <div class="evaluate-top">
-                  <div><img src="/images_J/download.jpg" alt="" /></div>
+                  <div><img :src="item.avatar" alt="" /></div>
                   <div>
-                    <p>AU辅助</p>
+                    <p>{{ item.created_at }}</p>
                     <p>
-                      <van-icon name="star" color="#FED201" />
-                      <van-icon name="star" color="#FED201" />
-                      <van-icon name="star" color="#FED201" />
-                      <van-icon name="star" color="#FED201" />
-                      <van-icon name="star-o" color="#DFDDE3" />
+                      <van-icon
+                        name="star"
+                        color="#FED201"
+                        v-for="(item, index) in item.grade"
+                        :key="index"
+                      />
                     </p>
                   </div>
                 </div>
-                <p class="ke1" style="font-size:0.3rem;">很棒的课程</p>
+                <p class="ke1" style="font-size:0.3rem;">{{ item.nickname }}</p>
                 <p class="ke2" style="font-size:0.3rem;color:#ADADAD;">
                   2018-01-01 -- 18:19:123
                 </p>
@@ -77,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div class="course-bom" @click="gm">立即报名</div>
+    <div class="course-bom" @click="gm">{{ title }}</div>
     <van-popup
       class="popup-bom"
       v-model="show2"
@@ -133,6 +140,8 @@ import {
   ClassRegistration,
   Chapter,
   collect,
+  Getevaluation,
+  onCourseCollection,
 } from "@/utils/api";
 
 export default {
@@ -142,30 +151,65 @@ export default {
       images: [],
       list: [],
       list2: [],
-      show: false,
+      // show: false,
       id: "",
+      list3: [],
+      //评论
+      list4: [],
+      title: "",
     };
   },
   mounted() {
+    // FeatureClassListData({ page: 10 }).then((res) => {
+    // console.log(res);
+    if (this.$store.state.id == 1) {
+      this.title = "立即学习";
+    } else {
+      this.title = "立即报名";
+    }
+    // });
     GetCourseDetile(this.$route.query.id).then((res) => {
       console.log(res);
+
       this.images = res.recommendCourse;
       this.list = res.info;
       this.id = res.info.id;
       this.list2 = res.teachers[0];
       console.log(this.list);
-      Chapter(res.info.id).then((res) => {
+      /////评论
+      Getevaluation({ id: res.info.id, limit: 10, page: 1 }).then((res) => {
         console.log(res);
+        this.list4 = res.list;
+      });
+      Chapter(res.info.id).then((res) => {
+        //关联大纲
+        console.log(res);
+        this.list3 = res.data;
       });
     });
     console.log(this.$route.query.id);
+    // this.sc();
+    //  collect(id.id).then((res) => {
+    //       console.log(res, this.show);
+    //     });
   },
   methods: {
     sc(id) {
-      collect(id).then((res) => {
-        this.show = true;
-        console.log(res, this.show);
-      });
+      console.log(id);
+      if (this.show == true) {
+        collect(id.id).then((res) => {
+          // console.log(res, this.show);
+        });
+      } else {
+        console.log("不能取消收藏");
+        // onCourseCollection({ id: id.collect_id, type: id.sale_type }).then(
+        //   (res) => {
+        //     console.log(res);
+        //   }
+        // );
+        // console.log("123");
+      }
+
       console.log(id);
     },
     wx() {
@@ -299,7 +343,7 @@ export default {
   }
   .qb {
     width: 100%;
-    height: 11.45rem;
+    height: 88%;
     overflow: hidden;
     .qb1 {
       width: 100%;
@@ -426,6 +470,7 @@ export default {
   }
 
   .course-bom {
+    position: fixed;
     text-align: center;
     width: 100%;
     height: 1rem;
@@ -433,6 +478,7 @@ export default {
     background: #fb5500;
     font-size: 0.4rem;
     color: #fff;
+    bottom: 0;
   }
 }
 </style>

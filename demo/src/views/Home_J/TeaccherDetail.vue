@@ -32,7 +32,7 @@
         </div>
         <!-- 评价信息 -->
         <van-sticky>
-                <van-tabs v-model="active" @click="istitle(active)">
+                <van-tabs v-model="active">
                     <van-tab title="老师信息"></van-tab>
                     <van-tab title="学员评价"></van-tab>
                     <van-tab title="主讲课程"></van-tab>
@@ -79,7 +79,7 @@
         <!-- 主流课程 -->
         <div class="teacherhost" v-show="active === 2">
             <div class="scrollbox">
-                    <div v-show="zjkc.length != 0" class="li" v-for="item in zjkc" :key="item.id">
+                    <div v-show="zjkc.length != 0" class="li" v-for="item in zjkc" :key="item.id" @click="gotoTeacherDetile(item.id)">
                         <img :src="item.cover_img">
                         <div>
                             <b>{{item.title}}</b>
@@ -116,15 +116,11 @@ export default {
         goBack() {
             this.$router.go(-1);
         },
-        // 评价title
-        istitle(ind){
-            // console.log(ind);
-        },
         // 关注/取关
         IsTeacherAttention(){
             isTeacherAttention({id:Number(this.$route.params.id)}).then((res)=>{
-                console.log(res,Number(this.$route.params.id));
-                if(res.flag == 1){
+                console.log(res);
+                if(res.flag == 2){
                     this.careClass = true
                     Toast({
                     message: '收藏',
@@ -137,14 +133,18 @@ export default {
                     });
                 }
             })
-        }
+        },
+        // 点击主讲课程跳至课程详情页
+        gotoTeacherDetile(id){
+            this.$router.push({path:'/particulars',query:{id}})
+        },
     },
     mounted() {
         // 获取老师
         teacherDetile(this.$route.params.id).then((res)=>{
             this.teacherDetiles = []
             this.teacherDetiles.push(res.teacher)
-            if(res.flag == 1){
+            if(res.flag == 2){
                 this.careClass = true
             }else{
                 this.careClass = false
@@ -155,7 +155,7 @@ export default {
         MainCourse({limit:1,page:1,teacher_id:this.$route.params.id}).then((res)=>{
             this.zjkc = res.list
             // console.log(res.list);
-        })
+        }),
         // 获取评论信息  #### 数据为空
         teacherDiscussDetile({limit:5,page:1,teacher_id:Number(this.$route.params.id)}).then((res)=>{
             // console.log(res);
