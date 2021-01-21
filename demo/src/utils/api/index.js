@@ -94,7 +94,7 @@ const MainCourse = async function({ limit, page, teacher_id }) {
 const GetCourseDetile = async function(id) {
     // console.log(id);
   var { data } = await server.get(`/api/app/courseInfo/basis_id=${id}`);
-  return Promise.resolve(data);
+  return Promise.resolve(data.data);
 };
 //
 // 课程评价数据获取

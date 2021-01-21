@@ -156,7 +156,7 @@
         </div>
       </div>
       <div class="teacher">
-        <div class="lis" v-for="itm in item.list" :key="itm.teacher_id" @click="item.channel_info.name == '热门资讯' ? '' : gotoTeacherDetile(itm.teacher_id)">
+        <div class="lis" v-for="itm in item.list" :key="itm.teacher_id" @click="item.channel_info.name == '热门资讯' ? rmzx() : gotoTeacherDetile(itm.teacher_id)">
           <img :src="itm.teacher_avatar ? itm.teacher_avatar : itm.thumb_img">
           <div>
             <p><b>{{itm.teacher_name ? itm.teacher_name : itm.title}}</b><span class="ccc">{{itm.created_at ? itm.created_at :'北京大学'}}</span></p>
@@ -432,6 +432,7 @@
   }
 </style>
 <script>
+import { Toast } from 'vant';
 import { homeswipereq,homereq } from '@/utils/api'
 export default {
   data() {
@@ -455,7 +456,7 @@ export default {
     },
     // 更多热门资讯
     rmzx(){
-      this.$router.push({path:'/HotInformation'})
+      Toast.fail('暂未开放');
     },
     // 更多名师阵容
     mszr(){

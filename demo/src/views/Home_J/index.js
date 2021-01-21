@@ -32,6 +32,11 @@ const routes = [
             topShow:true
         },
         component:() => import('./CoupleBack')
+    },
+    {
+        path:'/CS',
+        name:'CS',
+        component:() => import('./CS')
     }
 ]
 
