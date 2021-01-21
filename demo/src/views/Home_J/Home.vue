@@ -1,5 +1,5 @@
 <template>
-  <div class="box_J" @scroll="gotuTop($event)">
+  <div class="box_J">
     <header>
       <img src="/images_J/logo.png" >
       <van-icon name="bulb-o" />
@@ -17,11 +17,11 @@
         <img src="/images_J/1.png">
         <span>名师</span>
       </div>
-      <div>
+      <div @click="GotoClass()">
         <img src="/images_J/2.png">
         <span>课表</span>
       </div>
-      <div>
+      <div @click="Abouttheclass()">
         <img src="/images_J/3.png">
         <span>约课</span>
       </div>
@@ -151,12 +151,12 @@
         <p></p>
         <span>{{ item.channel_info.name }}</span>
         </div>
-        <div class="ccc">
+        <div class="ccc" @click="item.channel_info.name == '热门资讯' ? rmzx() : mszr()">
           更多>>
         </div>
       </div>
       <div class="teacher">
-        <div class="lis" v-for="itm in item.list" :key="itm.teacher_id" @click="gotoTeacherDetile(itm.teacher_id ? itm.teacher_id : itm.id)">
+        <div class="lis" v-for="itm in item.list" :key="itm.teacher_id" @click="item.channel_info.name == '热门资讯' ? '' : gotoTeacherDetile(itm.teacher_id)">
           <img :src="itm.teacher_avatar ? itm.teacher_avatar : itm.thumb_img">
           <div>
             <p><b>{{itm.teacher_name ? itm.teacher_name : itm.title}}</b><span class="ccc">{{itm.created_at ? itm.created_at :'北京大学'}}</span></p>
@@ -164,10 +164,6 @@
           </div>
         </div>       
       </div>
-    </div>
-    <!-- 拖拽的邮件小球 -->
-    <div v-show="topShopw" class="gotoTop" @click="goTop($event)">
-      <van-icon name="envelop-o" />
     </div>
   </div>
 </template>
@@ -434,45 +430,17 @@
       }
     }
   }
-  // 邮件小组件
-  .gotoTop{
-    width: 1.5rem;
-    height: 1.5rem;
-    background-image:linear-gradient(to bottom,rgb(243, 243, 243),rgb(253, 82, 15),rgb(253, 253, 59));
-    color: #fff;
-    position: absolute;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 1.8rem;
-    bottom: 1.2rem;
-    right: .2rem;
-    z-index: 10;   
-  }
 </style>
 <script>
 import { homeswipereq,homereq } from '@/utils/api'
 export default {
   data() {
     return {
-      // 回顶的显示隐藏
-      topShopw:false,
       swipeimgs:[],
       teachers:[]
     }
   },
   methods: {
-    // 回顶的显示隐藏
-    gotuTop(event){
-      if(event.target.scrollTop >= 1000){
-        this.topShopw = true
-      }else{
-        this.topShopw = false
-      }
-    },
-    goTop(event){
-      alert('别急内容改造中')
-      // location.href = '/Home'
-    },
     // nav名师页跳转
     topTeacher(){
       this.$router.push({path:'/TopTeacher'})
@@ -480,6 +448,22 @@ export default {
     // 跳转至老师详情页
     gotoTeacherDetile(id){
       this.$router.push({name:'TeaccherDetail',params:{id}})
+    },
+    // 跳转至课程页
+    GotoClass(){
+      this.$router.push({path:'/Course'})
+    },
+    // 跳转至约课页
+    Abouttheclass(){
+      this.$router.push({path:'/AuoutCourse'})
+    },
+    // 更多热门资讯
+    rmzx(){
+      this.$router.push({path:'/HotInformation'})
+    },
+    // 更多名师阵容
+    mszr(){
+      this.$router.push({path:'/TopTeachers'})
     }
   },
   created() {
@@ -489,7 +473,7 @@ export default {
     })
     homereq().then((res)=>{
       this.teachers = res;
-      // console.log(res);
+      console.log(res);
     })
   },
 }

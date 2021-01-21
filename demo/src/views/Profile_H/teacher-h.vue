@@ -1,7 +1,7 @@
 <template>
   <div class="teacher-h">
     <Return>我的关注</Return>
-    <div class="body">
+    <div class="teacher-body">
       <div class="teacher" v-for="item in obj" :key="item.teacher_id">
         <div class="teacher-top">
           <img :src="item.avatar" alt="" />
@@ -15,7 +15,7 @@
             </p>
           </div>
         </div>
-        <button>查看详情</button>
+        <button @click="xiang(item.teacher_id)">查看详情</button>
       </div>
     </div>
   </div>
@@ -33,20 +33,24 @@ export default {
     };
   },
   created() {
-    collect().then((res) => {
+    collect({type:2}).then((res) => {
       console.log(res.data);
       this.obj = res.data.list;
     });
   },
-  methods: {},
+  methods: {
+    xiang(id){
+      this.$router.push({name:'TeaccherDetail',params:{id}})
+    }
+  },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .teacher-h {
   width: 100%;
   height: 100%;
   // background-color: #F0F2F5;
-  .body {
+  .teacher-body {
     width: 100%;
     padding: 0.2rem;
     .teacher {

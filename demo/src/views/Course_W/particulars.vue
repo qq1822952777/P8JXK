@@ -14,46 +14,43 @@
       <div class="qb1">
         <van-swipe class="imsg-w" :autoplay="3000">
           <van-swipe-item v-for="(image, index) in images" :key="index">
-            <img v-lazy="image" />
+            <img v-lazy="image.cover_img" />
           </van-swipe-item>
         </van-swipe>
         <div class="course">
-          <p class="ys">雅思七日冲刺</p>
-          <p class="ys2">
-            <span>￥1998.0</span><span>￥589.0</span><span>vip专享</span>
+          <p class="ys">
+            {{ list.title }}
+            <van-icon
+              name="star"
+              @click="sc(list.id)"
+              :color="show == true ? 'red' : ''"
+            />
           </p>
-          <p class="ys3">8763人已报名 | 8763次浏览</p>
-          <div class="ys4">
-            <div>领券</div>
-            <div>
-              <van-button type="default">立减100</van-button
-              ><van-button type="default">立减200</van-button
-              ><van-button type="default">立减300</van-button>
-            </div>
-            <div>
-              <van-icon name="arrow" @click="tier" />
-            </div>
+          <p class="ys3">
+            共{{ list.total_periods }}课时 | {{ list.is_free }}人已报名
+          </p>
+          <div class="bm-top">
+            <p>教学团队</p>
+            <img :src="list2.avatar" alt="" />
+            <p>{{ list2.teacher_name }}</p>
           </div>
           <!-- v-model:active="active" -->
           <van-tabs
             style="width: 90%;
             margin: auto;"
           >
-            <van-tab title="课程详情" style="font-size:0.35rem;"
-              >按时发放回收的好地方感觉回到法国</van-tab
-            >
-            <van-tab title="关联课程">
-              <van-card
-                v-for="(item, index) in 7"
-                :key="index"
-                num="2"
-                tag="标签"
-                price="2.00"
-                desc="描述信息"
-                title="商品标题"
-                thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
-                origin-price="10.00"
-              />
+            <van-tab title="课程介绍" style="font-size:0.35rem;">
+              <p style="font-size:0.4rem;">课程介绍</p>
+              <p
+                style="font-size:0.3rem;padding-top:0.2rem;"
+                v-html="list.course_details"
+              ></p>
+            </van-tab>
+            <van-tab title="关联大纲">
+              <p>课程大纲</p>
+              <ul>
+                <li></li>
+              </ul>
             </van-tab>
             <van-tab title="课程评价">
               <div class="evaluate" v-for="(item, index) in 3" :key="index">
@@ -80,32 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="course-bom" @click="gm">
-      立即购买
-    </div>
-    <van-popup
-      class="popup-ttp"
-      v-model="show"
-      position="bottom"
-      :style="{ height: '50%' }"
-    >
-      <p style="font-size:0.4rem;padding-top:0.2rem;padding-left:0.3rem;">
-        优惠券
-      </p>
-      <ul class="popup">
-        <li v-for="(item, index) in 4" :key="index">
-          <div class="popup1">
-            <div>￥ <span>50</span></div>
-            <div>
-              <p>现金券</p>
-              <p>限品类:初三英语</p>
-              <p>2018.02.14 - 2018.02.20</p>
-            </div>
-          </div>
-          <div class="popup2">立即领取</div>
-        </li>
-      </ul>
-    </van-popup>
+    <div class="course-bom" @click="gm">立即报名</div>
     <van-popup
       class="popup-bom"
       v-model="show2"
@@ -156,28 +128,59 @@
 <script>
 import Vue from "vue";
 import { Lazyload } from "vant";
+import {
+  GetCourseDetile,
+  ClassRegistration,
+  Chapter,
+  collect,
+} from "@/utils/api";
+
 export default {
   data() {
     return {
-      show: false,
       show2: false,
-      images: [
-        "https://img.yzcdn.cn/vant/apple-1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg",
-      ],
+      images: [],
+      list: [],
+      list2: [],
+      show: false,
+      id: "",
     };
   },
-  mounted() {},
+  mounted() {
+    GetCourseDetile(this.$route.query.id).then((res) => {
+      console.log(res);
+      this.images = res.recommendCourse;
+      this.list = res.info;
+      this.id = res.info.id;
+      this.list2 = res.teachers[0];
+      console.log(this.list);
+      Chapter(res.info.id).then((res) => {
+        console.log(res);
+      });
+    });
+    console.log(this.$route.query.id);
+  },
   methods: {
+    sc(id) {
+      collect(id).then((res) => {
+        this.show = true;
+        console.log(res, this.show);
+      });
+      console.log(id);
+    },
     wx() {
       this.$router.push({ path: "/WeChat" });
     },
     gm() {
-      //   console.log("123");
-      this.$router.push({ path: "/verify" });
-    },
-    tier() {
-      this.show = true;
+      if (this.$store.state.token) {
+        console.log(this.list.id);
+        ClassRegistration({ id: this.list.id, type: 5 }).then((res) => {
+          console.log(res);
+        });
+        this.$router.push({ path: "/verify" });
+      } else {
+        this.$router.push({ path: "/Login" });
+      }
     },
     onClickLeft() {
       this.$router.go(-1);
@@ -305,6 +308,25 @@ export default {
       .course {
         width: 100%;
         height: 7.45rem;
+        .bm-top {
+          width: 90%;
+          height: 2rem;
+          // background: chartreuse;
+          margin: 0.4rem 0;
+          font-size: 0.4rem;
+          margin-left: 0.3rem;
+          p:nth-child(3) {
+            margin-left: 0.4rem;
+            font-size: 0.3rem;
+          }
+          img {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            margin-left: 0.3rem;
+            margin-top: 0.2rem;
+          }
+        }
         .ys {
           width: 100%;
           height: 0.8rem;
@@ -312,41 +334,7 @@ export default {
           padding-left: 0.3rem;
           padding-top: 0.3rem;
         }
-        .ys2 {
-          height: 0.7rem;
-          display: flex;
-          align-items: center;
-          padding-left: 0.2rem;
-          span {
-            height: 100%;
-            line-height: 0.6rem;
-          }
-          span:nth-child(1) {
-            width: 33%;
-            font-size: 0.4rem;
-            color: #f40320;
-          }
-          span:nth-child(2) {
-            font-size: 0.38rem;
-            width: 23%;
 
-            color: #f40320;
-          }
-          span:nth-child(3) {
-            width: 20%;
-            height: 70%;
-            text-align: center;
-            background: -webkit-linear-gradient(
-              right,
-              #ce9c74,
-              rgb(207, 189, 166)
-            );
-            border-radius: 0.1rem;
-            color: #123;
-            font-size: 0.28rem;
-            margin-bottom: 0.1rem;
-          }
-        }
         .ys3 {
           font-size: 0.3rem;
           color: #b3b3b3;

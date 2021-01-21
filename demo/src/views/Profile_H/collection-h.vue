@@ -2,20 +2,24 @@
   <div class="collection-h">
     <Return>我的收藏</Return>
     <ul class="collection-uu-h">
-      <li>
-        <img src="" alt="" />
+      <li v-for="item in colllist" :key="item.collect_id">
+        <div class="img">
+          <img :src="item.teachersAvatar" alt="" />
+        </div>
         <div class="collection-dv-h">
           <div>
             <h4>
-              <van-tag class="orange-h" plain type="primary">券</van-tag
-              >如何成为旅游体验师
+              <van-tag v-if="item.underlined_price!=0" class="orange-h" plain type="primary">券</van-tag
+              >{{item.title}}
             </h4>
-            <span class="collection-gray-h">845人已报名</span>
+            <span class="collection-gray-h">{{item.sales_nums}}人已报名</span>
           </div>
-          <span class="collection-red-h">￥<b>1998.0</b></span>
+          <span v-if="item.price!=0" class="collection-red-h">￥<b>1998.0</b></span>
+          <span v-else class="collection-green-h">{{item.price==0?'免费':item.price}}</span>
+          
         </div>
       </li>
-      <li>
+      <!-- <li>
         <img src="" alt="" />
         <div class="collection-dv-h">
           <div>
@@ -57,24 +61,27 @@
           </div>
           <span class="collection-green-h">免费</span>
         </div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
 <script>
 import Return from "@/components/return";
-import { CourseCollection } from "@/utils/api";
+import { collect } from "@/utils/api";
 export default {
   components: {
     Return,
   },
   data() {
-    return {};
+    return {
+      colllist: [],
+    };
   },
   created() {
-    CourseCollection({course_basis_id:1,type: 1}).then(res=>{
-      console.log(res);
-    })
+    collect({ type: 1 }).then((res) => {
+      console.log(res.data.list);
+      this.colllist = res.data.list;
+    });
   },
   methods: {},
 };
@@ -83,6 +90,7 @@ export default {
 .collection-h {
   width: 100%;
   height: 100%;
+  overflow: auto;
   .collection-uu-h {
     width: 100%;
     padding: 0 0.3rem;
@@ -95,8 +103,13 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      img {
-        width: 30%;
+      .img {
+        width: 2rem;
+        height: 2rem;
+        overflow: hidden;
+        img {
+          width: 100%;
+        }
       }
       .collection-dv-h {
         width: 60%;

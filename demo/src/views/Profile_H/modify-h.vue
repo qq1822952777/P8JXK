@@ -125,7 +125,7 @@
       @cancel="showimg = false"
       @select="afterRead"
     >
-      <p @click="pai" class="setimg-h">拍照</p>
+      <p class="setimg-h"><span v-for="(item,index) in imgs" :key="index" @click="pai(item.img)">{{item.name}}</span></p>
       <van-uploader class="setimg-h" :after-read="afterRead"
         >从手机相册选择</van-uploader
       >
@@ -198,6 +198,28 @@ export default {
       ],
       img: "",
       class: "",
+      imgs:[
+        {
+          name:'图1',
+          img:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3256750006,1716423677&fm=11&gp=0.jpg'
+        },
+         {
+          name:'图2',
+          img:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1381671205,451482604&fm=11&gp=0.jpg'
+        },
+         {
+          name:'图3',
+          img:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2585856731,2289491349&fm=11&gp=0.jpg'
+        },
+        {
+          name:'图4',
+          img:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2318271753,100307953&fm=26&gp=0.jpg'
+        },
+        {
+          name:'图5',
+          img:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1753241147,394077696&fm=26&gp=0.jpg'
+        }
+      ]
     };
   },
   created() {
@@ -212,13 +234,14 @@ export default {
       user({ avatar: this.img }).then((res) => {
         this.showimg = false;
       });
+      this.$router.history.go(0) 
     },
-    pai() {
-      this.img =
-        "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1557122104,3885355970&fm=26&gp=0.jpg";
+    pai(img) {
+      this.img =img
       user({ avatar: this.img }).then((res) => {
         this.showimg = false;
       });
+      this.$router.history.go(0)
     },
     // 姓名
     nameHJ(name) {
@@ -249,6 +272,7 @@ export default {
       user({ birthday: this.timeValue }).then((res) => {
         this.showdate = false;
       });
+      this.$router.history.go(0)
     },
     // 时间后缀
     formatter(type, value) {
@@ -276,6 +300,7 @@ export default {
       }).then((res) => {
         this.showcity = false;
       });
+      this.$router.history.go(0)
     },
     // 年级
     gradeHJ() {
@@ -350,6 +375,9 @@ export default {
     height: 1rem;
     line-height: 1rem;
     font-size: 0.3rem;
+    span{
+      margin: 0 .1rem;
+    }
     .van-uploader__wrapper {
       width: 100%;
       .van-uploader__input-wrapper {

@@ -1,6 +1,6 @@
 <template>
   <div class="mind">
-    <div class="body">
+    <div class="mind-body">
       <div class="orange-h"></div>
       <div class="name-h">
         <div class="name-h-top" @click="modifyHJ">
@@ -17,17 +17,17 @@
         </div>
         <ul class="name-h-down">
           <li @click="MyclassHJ">
-            <p class="name-h-down-orange">10</p>
+            <p class="name-h-down-orange">{{leng.length}}</p>
             <p>我的课程</p>
             <p class="name-h-down-gray">-已购课程学习-</p>
           </li>
           <li>
-            <p class="name-h-down-orange">5</p>
+            <p class="name-h-down-orange">0</p>
             <p>我的预约</p>
             <p class="name-h-down-gray">-一对一老师预约-</p>
           </li>
           <li @click="studyCurrencyHJ">
-            <p class="name-h-down-orange">10</p>
+            <p class="name-h-down-orange">0</p>
             <p>剩余学习币</p>
             <p class="name-h-down-gray">-查看剩余学习币-</p>
           </li>
@@ -142,7 +142,7 @@
   </div>
 </template>
 <script>
-import { userInof } from "@/utils/api";
+import { userInof,Getcharacteristic } from "@/utils/api";
 export default {
   data() {
     return {
@@ -165,13 +165,18 @@ export default {
       ],
       token: this.$store.state.token,
       userInfo: [],
+      leng:[],
     };
   },
   created() {
     userInof().then((res) => {
       this.userInfo = res.data;
       console.log(res.data);
-    });
+    }),
+    Getcharacteristic().then((res) => {
+      this.leng=res.data.courseList
+      console.log(this.leng);
+    })
   },
   methods: {
     // 登录
@@ -227,7 +232,7 @@ export default {
   height: calc(100% - 1rem);
   overflow: scroll;
   position: relative;
-  .body {
+  .mind-body {
     width: 100%;
     .orange-h {
       width: 100%;
