@@ -119,7 +119,7 @@
           :key="index"
           :title="item.title"
           :thumb="item.cover_img"
-          @click="xq(item.id)"
+          @click="xq(item)"
         >
           <template #tags>
             <van-tag plain type="danger" color="#123" style="border:0;"
@@ -247,7 +247,8 @@ export default {
     },
     xq(id) {
       console.log(id);
-      this.$router.push({ path: "/particulars", query: { id: id } });
+      this.$router.push({ path: "/particulars", query: { id: id.id } });
+      this.$store.commit("add", id.has_buy);
     },
     sear() {
       this.$router.push({ path: "/Search" });

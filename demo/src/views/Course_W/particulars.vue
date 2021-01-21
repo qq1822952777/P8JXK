@@ -23,7 +23,7 @@
             <van-icon
               name="star"
               @click="sc(list)"
-              :color="show == true ? 'red' : ''"
+              :color="list.is_buy == 1 ? 'red' : ''"
             />
           </p>
           <p class="ys3">
@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div class="course-bom" @click="gm">立即报名</div>
+    <div class="course-bom" @click="gm">{{ title }}</div>
     <van-popup
       class="popup-bom"
       v-model="show2"
@@ -151,16 +151,26 @@ export default {
       images: [],
       list: [],
       list2: [],
-      show: false,
+      // show: false,
       id: "",
       list3: [],
       //评论
       list4: [],
+      title: "",
     };
   },
   mounted() {
+    // FeatureClassListData({ page: 10 }).then((res) => {
+    // console.log(res);
+    if (this.$store.state.id == 1) {
+      this.title = "立即学习";
+    } else {
+      this.title = "立即报名";
+    }
+    // });
     GetCourseDetile(this.$route.query.id).then((res) => {
       console.log(res);
+
       this.images = res.recommendCourse;
       this.list = res.info;
       this.id = res.info.id;
@@ -179,14 +189,16 @@ export default {
     });
     console.log(this.$route.query.id);
     // this.sc();
+    //  collect(id.id).then((res) => {
+    //       console.log(res, this.show);
+    //     });
   },
   methods: {
     sc(id) {
       console.log(id);
-      this.show = !this.show;
       if (this.show == true) {
         collect(id.id).then((res) => {
-          console.log(res, this.show);
+          // console.log(res, this.show);
         });
       } else {
         console.log("不能取消收藏");

@@ -245,7 +245,7 @@ export default {
   }
   .box1 {
     width: 100%;
-    height: 11.1rem;
+    height: 87%;
     overflow-y: auto;
     margin-top: 0.2rem;
     .bxo2 {
