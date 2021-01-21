@@ -216,9 +216,8 @@ export default {
       this.$router.push({ path: "/WeChat" });
     },
     gm() {
-      // console.log(this.$store.state.token);
-      // console.log(this.list.id);
       if (this.$store.state.token) {
+        console.log(this.list.id);
         ClassRegistration({ id: this.list.id, type: 5 }).then((res) => {
           console.log(res);
         });

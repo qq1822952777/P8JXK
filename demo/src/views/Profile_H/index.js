@@ -117,6 +117,12 @@ const routers = [
         name:'setpass',
         component:() => import('./setpass-h.vue')
     },
+    {
+        // 学习卡兑换
+        path:'/card-h',
+        name:'card',
+        component:() => import('./card-h.vue')
+    },
     
     
 ]

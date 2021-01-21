@@ -69,7 +69,7 @@
       </li>
     </ul>
     <!-- 学科 -->
-    <van-popup class="class" v-model:show="showclass">
+    <van-popup class="class" v-model="showclass">
       <p class="class-top">学科选择</p>
       <ul class="class-uu">
         <li
@@ -77,7 +77,7 @@
           ref="ass"
           :class="item.falg ? 'orange-class' : ''"
           :key="index"
-          @click="classHJ(index, item)"
+          @click="classHJ(index)"
         >
           {{ item.name }}
         </li>
@@ -85,11 +85,7 @@
       <button class="class-btn orange-class" @click="classH">确认</button>
     </van-popup>
     <!-- 时间弹出框 -->
-    <van-popup
-      v-model:show="showdate"
-      position="bottom"
-      :style="{ height: '30%' }"
-    >
+    <van-popup v-model="showdate" position="bottom" :style="{ height: '30%' }">
       <van-datetime-picker
         v-model="currentDate"
         type="date"
@@ -103,11 +99,7 @@
       />
     </van-popup>
     <!-- 地址弹出框 -->
-    <van-popup
-      v-model:show="showcity"
-      position="bottom"
-      :style="{ height: '30%' }"
-    >
+    <van-popup v-model="showcity" position="bottom" :style="{ height: '30%' }">
       <van-area
         :area-list="areaList"
         @confirm="onAreaConfirm"
@@ -116,11 +108,7 @@
       />
     </van-popup>
     <!-- 年级 -->
-    <van-popup
-      v-model:show="showgrade"
-      position="bottom"
-      :style="{ height: '30%' }"
-    >
+    <van-popup v-model="showgrade" position="bottom" :style="{ height: '30%' }">
       <van-area
         :area-list="gradelist"
         :columns-num="1"
@@ -131,13 +119,13 @@
     </van-popup>
     <!-- 头像 -->
     <van-action-sheet
-      v-model:show="showimg"
+      v-model="showimg"
       cancel-text="取消"
       close-on-click-action
       @cancel="showimg = false"
       @select="afterRead"
     >
-      <van-uploader class="setimg-h" :after-read="afterRead">拍照</van-uploader>
+      <p class="setimg-h"><span v-for="(item,index) in imgs" :key="index" @click="pai(item.img)">{{item.name}}</span></p>
       <van-uploader class="setimg-h" :after-read="afterRead"
         >从手机相册选择</van-uploader
       >
@@ -209,6 +197,29 @@ export default {
         },
       ],
       img: "",
+      class: "",
+      imgs:[
+        {
+          name:'图1',
+          img:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3256750006,1716423677&fm=11&gp=0.jpg'
+        },
+         {
+          name:'图2',
+          img:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1381671205,451482604&fm=11&gp=0.jpg'
+        },
+         {
+          name:'图3',
+          img:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2585856731,2289491349&fm=11&gp=0.jpg'
+        },
+        {
+          name:'图4',
+          img:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2318271753,100307953&fm=26&gp=0.jpg'
+        },
+        {
+          name:'图5',
+          img:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1753241147,394077696&fm=26&gp=0.jpg'
+        }
+      ]
     };
   },
   created() {
@@ -223,6 +234,14 @@ export default {
       user({ avatar: this.img }).then((res) => {
         this.showimg = false;
       });
+      this.$router.history.go(0) 
+    },
+    pai(img) {
+      this.img =img
+      user({ avatar: this.img }).then((res) => {
+        this.showimg = false;
+      });
+      this.$router.history.go(0)
     },
     // 姓名
     nameHJ(name) {
@@ -253,6 +272,7 @@ export default {
       user({ birthday: this.timeValue }).then((res) => {
         this.showdate = false;
       });
+      this.$router.history.go(0)
     },
     // 时间后缀
     formatter(type, value) {
@@ -270,11 +290,17 @@ export default {
       this.showcity = true;
     },
     onAreaConfirm(val) {
-      this.showcity = false;
-      this.arrArea = val;
-      var addrInfo = val[0].name + "-" + val[1].name + "-" + val[2].name;
-      this.valueArea = addrInfo;
-      this.$store.commit("cityHJ", this.valueArea);
+      user({
+        province_name: val[0].name,
+        province_id: val[0].code,
+        city_name: val[1].name,
+        city_id: val[1].code,
+        district_name: val[2].name,
+        district_id: val[2].code,
+      }).then((res) => {
+        this.showcity = false;
+      });
+      this.$router.history.go(0)
     },
     // 年级
     gradeHJ() {
@@ -285,23 +311,24 @@ export default {
       this.gradeclass = val[0].name;
       this.$store.commit("gradeHJ", this.gradeclass);
     },
-    classHJ(i, a) {
-      this.classlist.forEach((res, index) => {
-        if (index == i) {
-          res.falg = !res.falg;
+    classHJ(i) {
+      this.classlist[i].falg = !this.classlist[i].falg;
+      this.class = "";
+      this.classlist.forEach((res) => {
+        if (this.class == "") {
+          if (res.falg) {
+            this.class += res.name;
+          }
+        } else {
+          if (res.falg) {
+            this.class += "/" + res.name;
+          }
         }
       });
-      // this.classapp.forEach((res, index) => {
-      //   if (res != a.name) {
-      //     this.classapp.push(a.name);
-      //   } else {
-      //     this.classapp.splice(index, 1);
-      //   }
-      // });
-      // console.log(this.classapp);
     },
     classH() {
       this.showclass = false;
+      this.$store.commit('classH',this.class)
     },
   },
 };
@@ -345,7 +372,12 @@ export default {
   .setimg-h {
     width: 100%;
     text-align: center;
+    height: 1rem;
+    line-height: 1rem;
     font-size: 0.3rem;
+    span{
+      margin: 0 .1rem;
+    }
     .van-uploader__wrapper {
       width: 100%;
       .van-uploader__input-wrapper {

@@ -17,12 +17,8 @@ export default new Vuex.Store({
     id: "",
   },
   mutations: {
-    getuserInfo(state, obj) {
-      state.modifyHJ.img = obj.avatar;
-      state.modifyHJ.sex = obj.sex;
-      state.modifyHJ.birthday = obj.birthday;
-      state.modifyHJ.city =
-        obj.province_name + "-" + obj.city_name + "-" + obj.district_name;
+    classH(state,val){
+      state.modifyHJ.class = val
     },
     afterRead(state, img) {
       state.modifyHJ.img = img;

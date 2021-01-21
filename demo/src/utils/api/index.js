@@ -58,11 +58,9 @@ const user = async function(i) {
   return Promise.resolve(data);
 };
 // 关注的老师
-const collect = async function(id) {
-  console.log(id);
-  var { data } = await server.get("/api/app/collect?type=1", {
-    course_basis_id: id,
-  });
+const collect = async function({type}) {
+  console.log({type});
+  var { data } = await server.get(`/api/app/collect?type=${type}`);
   return Promise.resolve(data);
 };
 
@@ -126,13 +124,13 @@ const ClassRegistration = async function(obj) {
   console.log(obj);
   var { data } = await server.post("/api/app/order/downOrder", {
     shop_id: obj.id,
-    type: 5,
+    type:5
   });
   return Promise.resolve(data);
 };
 // 立即学习页面数据
 const LearningImmediately = async function({ id }) {
-  var { data } = await server.get("/api/app/myStudy/course/" + id);
+  var { data } = await server.get("/api/app/myStudy/" + id);
   return Promise.resolve(data.data);
 };
 // video视频获取接口
